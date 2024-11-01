@@ -3,13 +3,13 @@ from sys import exit as exiter
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 
-from BADMUSIC import LOGGER
+from BADMUSIC import LOGGERR
 from config import MONGO_DB_URI, DB_NAME
 
 try:
     shizuchat_db_client = MongoClient(MONGO_DB_URI)
 except PyMongoError as f:
-    LOGGER.error(f"Error in Mongodb: {f}")
+    LOGGERR.error(f"Error in Mongodb: {f}")
     exiter(1)
 shizuchat_main_db = shizuchat_db_client[DB_NAME]
 
@@ -70,7 +70,7 @@ class MongoDB:
 
 def __connect_first():
     _ = MongoDB("test")
-    LOGGER.info("Initialized Database!\n")
+    LOGGERR.info("Initialized Database!\n")
 
 
 __connect_first()

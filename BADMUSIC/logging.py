@@ -8,6 +8,7 @@ from motor.motor_asyncio import AsyncIOMotorClient as MongoCli
 from logging.handlers import RotatingFileHandler
 
 from config import LOG_FILE_NAME
+import config 
 
 logging.basicConfig(
     level=logging.INFO,

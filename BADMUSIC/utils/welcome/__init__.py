@@ -3,7 +3,7 @@ from sys import exit as exiter
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 
-from BADMUSIC import SUKH2
+from BADMUSIC import LOGGER
 from config import MONGO_DB_URI, DB_NAME
 
 try:
@@ -70,7 +70,7 @@ class MongoDB:
 
 def __connect_first():
     _ = MongoDB("test")
-    SUKH2.info("Initialized Database!\n")
+    LOGGER.info("Initialized Database!\n")
 
 
 __connect_first()

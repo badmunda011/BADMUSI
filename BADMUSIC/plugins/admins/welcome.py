@@ -1,4 +1,5 @@
 from secrets import choice
+from html import escape
 from traceback import format_exc
 
 from pyrogram import enums, filters

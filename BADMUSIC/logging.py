@@ -23,9 +23,9 @@ logging.basicConfig(
 logging.getLogger("pyrogram").setLevel(logging.ERROR)
 LOGGER = logging.getLogger(__name__)
 boot = time.time()
-mongodb = MongoCli(config.MONGO_URL)
+mongodb = MongoCli(config.MONGO_DB_URI)
 db = mongodb.Anonymous
-mongo = MongoClient(config.MONGO_URL)
+mongo = MongoClient(config.MONGO_DB_URI)
 OWNER = config.OWNER_ID
 logging.getLogger("apscheduler").setLevel(logging.ERROR)
 logging.getLogger("pytgcalls").setLevel(logging.ERROR)

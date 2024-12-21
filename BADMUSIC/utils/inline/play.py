@@ -9,27 +9,27 @@ def get_progress_bar(percentage):
     umm = math.floor(percentage)
 
     if 0 < umm <= 10:
-        return "▁▄▂▇▄▅▄▅▃"
+        return "▰▱▱▱▱▱▱▱▱"
     elif 10 < umm <= 20:
-        return "▁▃▇▂▅▇▄▅▃"
+        return "▰▰▱▱▱▱▱▱▱"
     elif 20 < umm <= 30:
-        return "▃▁▇▂▅▃▄▃▅"
+        return "▰▰▰▱▱▱▱▱▱"
     elif 30 < umm <= 40:
-        return "▃▄▂▄▇▅▃▅▁"
+        return "▰▰▰▰▱▱▱▱▱"
     elif 40 < umm <= 50:
-        return "▁▃▄▂▇▃▄▅▃"
+        return "▰▰▰▰▰▱▱▱▱"
     elif 50 < umm <= 60:
-        return "▃▁▄▂▅▃▇▃▅"
+        return "▰▰▰▰▰▰▱▱▱"
     elif 60 < umm <= 70:
-        return "▁▇▄▂▅▄▅▃▄"
+        return "▰▰▰▰▰▰▰▱▱"
     elif 70 < umm <= 80:
-        return "▁▃▅▇▂▅▄▃▇"
+        return "▰▰▰▰▰▰▰▰▱"
     elif 80 < umm <= 90:
-        return "▃▅▂▅▇▁▄▃▁"
+        return "▰▰▰▰▰▰▰▰▰"
     elif 90 < umm <= 100:
-        return "▃▅▂▅▃▇▄▅▃"
+        return "▰▰▰▰▰▰▰▰▰▰"
     else:
-        return "▁▄▂▇▄▅▄▅▃"
+        return "▱▱▱▱▱▱▱▱▱"
 
 
 def stream_markup_timer(_, videoid, chat_id, played, dur):

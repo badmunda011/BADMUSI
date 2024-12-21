@@ -101,7 +101,7 @@ async def _clear_(chat_id):
     try:
         await app.send_message(
             chat_id,
-            f"**🎧 ɴᴇᴡ sᴏɴɢ ʟᴀɢᴀᴏ ɴᴀ ʙᴀʙʏ🥀⁣⁣⁣⁣⁣⁣⁣⁣⁣⁣⁣**{text}",
+            f"**🎧 ɴᴇᴡ sᴏɴɢ ʟᴀɢᴀᴏ ɴᴀ ʙᴀʙʏ🥀⁣⁣⁣⁣⁣⁣⁣⁣⁣⁣⁣**",
         )
     except Exception as e:
         print(f"Error sending message: {e}")

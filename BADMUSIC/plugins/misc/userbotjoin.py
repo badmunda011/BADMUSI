@@ -1,6 +1,7 @@
 import asyncio
 
 from pyrogram import filters
+from pyrogram.types import ChatMemberUpdated
 from pyrogram.enums import ChatMemberStatus
 from pyrogram.errors import InviteRequestSent
 

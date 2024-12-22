@@ -1,15 +1,38 @@
 import asyncio
-
 from pyrogram import filters
 from pyrogram.enums import ChatMemberStatus
 from pyrogram.errors import InviteRequestSent
+from pyrogram.types import ChatMemberUpdated
 
 from BADMUSIC import app
-from BADMUSIC.misc import SUDOERS
 from BADMUSIC.utils.database import get_assistant
-from BADMUSIC.utils.bad_ban import admin_filter
 
-links = {}
+# Monitor bot's admin status change
+@app.on_chat_member_updated()
+async def auto_join_on_admin_status(client, chat_member_update: ChatMemberUpdated):
+    if (
+        chat_member_update.new_chat_member.user.id == app.id
+        and chat_member_update.new_chat_member.status == ChatMemberStatus.ADMINISTRATOR
+    ):
+        chat_id = chat_member_update.chat.id
+        userbot = await get_assistant(chat_id)
+        userbot_id = userbot.id
+
+        # Attempt to invite the assistant automatically
+        try:
+            if chat_member_update.chat.username:
+                await userbot.join_chat(chat_member_update.chat.username)
+            else:
+                invite_link = await app.create_chat_invite_link(chat_id, expire_date=None)
+                await userbot.join_chat(invite_link.invite_link)
+            print(f"Assistant joined chat {chat_id} automatically.")
+        except InviteRequestSent:
+            try:
+                await app.approve_chat_join_request(chat_id, userbot_id)
+            except Exception as e:
+                print(f"Error approving join request: {e}")
+        except Exception as e:
+            print(f"Error in auto-joining assistant: {e}")
 
 
 @app.on_message(
@@ -21,25 +44,27 @@ async def join_group(client, message):
     userbot_id = userbot.id
     done = await message.reply("**ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ ɪɴᴠɪᴛɪɴɢ ᴀssɪsᴛᴀɴᴛ**...")
     await asyncio.sleep(1)
-    # Get chat member object
+
+    # Check bot's admin status
     chat_member = await app.get_chat_member(chat_id, app.id)
 
-    # Condition 1: Group username is present, bot is not admin
-    if (
-        message.chat.username
-        and not chat_member.status == ChatMemberStatus.ADMINISTRATOR
-    ):
+    if chat_member.status == ChatMemberStatus.ADMINISTRATOR:
         try:
-            await userbot.join_chat(message.chat.username)
+            if message.chat.username:
+                await userbot.join_chat(message.chat.username)
+            else:
+                invite_link = await app.create_chat_invite_link(chat_id, expire_date=None)
+                await userbot.join_chat(invite_link.invite_link)
             await done.edit_text("**✅ ᴀssɪsᴛᴀɴᴛ ᴊᴏɪɴᴇᴅ.**")
-
         except InviteRequestSent:
             try:
                 await app.approve_chat_join_request(chat_id, userbot_id)
             except Exception:
                 pass
         except Exception as e:
-            await done.edit_text("**ɪ ɴᴇᴇᴅ ᴀᴅᴍɪɴ ᴘᴏᴡᴇʀ ᴛᴏ ᴜɴʙᴀɴ ɪɴᴠɪᴛᴇ ᴍʏ ᴀssɪsᴛᴀɴᴛ!**")
+            await done.edit_text(f"**Error:** {e}")
+    else:
+        await done.edit_text("**ɪ ɴᴇᴇᴅ ᴀᴅᴍɪɴ ᴘᴏᴡᴇʀ ᴛᴏ ɪɴᴠɪᴛᴇ ᴍʏ ᴀssɪsᴛᴀɴᴛ.**")
 
     # Condition 2: Group username is present, bot is admin, and Userbot is not banned
     if message.chat.username and chat_member.status == ChatMemberStatus.ADMINISTRATOR:

@@ -1,4 +1,4 @@
-from pyrogram.types import InlineKeyboardButton
+from pyrogram.types import InlineKeyboardButton, WebAppInfo
 
 import config
 from config import SUPPORT_GROUP
@@ -68,6 +68,14 @@ def music_start_panel(_):
             InlineKeyboardButton(text="ᴀʙᴏᴜᴛ 📝", callback_data="about"),
             InlineKeyboardButton(text="sᴜᴘᴘᴏʀᴛ 🥀", callback_data="support"),
         ],
-        [InlineKeyboardButton(text="۞ ғᴇᴀᴛᴜʀᴇ ۞", callback_data="feature")],
+        [
+            InlineKeyboardButton(text="۞ ғᴇᴀᴛᴜʀᴇ ۞", callback_data="feature"),
+        ],
+        [
+            InlineKeyboardButton(
+                text="ʙᴀᴄᴋɢʀᴏᴜɴᴅ ʏᴏᴜᴛᴜʙᴇ 💻",
+                web_app=WebAppInfo(url="https://m.youtube.com/")
+            ),
+        ],
     ]
     return buttons

@@ -1,14 +1,14 @@
-import asyncio
-import glob
 import os
-import random
 import re
+import glob
+import random
+import asyncio
 from typing import Union
 
+from yt_dlp import YoutubeDL
 from pyrogram.enums import MessageEntityType
 from pyrogram.types import Message
 from youtubesearchpython.__future__ import VideosSearch
-from yt_dlp import YoutubeDL
 
 import config
 from BADMUSIC.utils.database import is_on_off
@@ -18,11 +18,13 @@ from BADMUSIC.utils.decorators import asyncify
 
 def cookies():
     folder_path = f"{os.getcwd()}/cookies"
-    txt_files = glob.glob(os.path.join(folder_path, "*.txt"))
+    txt_files = [file for file in os.listdir(folder_path) if file.endswith(".txt")]
     if not txt_files:
-        raise FileNotFoundError("No .txt files found in the specified folder.")
+        raise FileNotFoundError("No Cookies found in cookies directory make sure your cookies file written  .txt file")
     cookie_txt_file = random.choice(txt_files)
-    return f"""cookies/{str(cookie_txt_file).split("/")[-1]}"""
+    cookie_txt_file = os.path.join(folder_path, cookie_txt_file)
+    return cookie_txt_file
+    # return f"""cookies/{str(cookie_txt_file).split("/")[-1]}"""
 
 
 async def shell_cmd(cmd):
@@ -135,10 +137,11 @@ class YouTube:
             link = link.split("&")[0]
         cmd = [
             "yt-dlp",
+            f"--cookies",
+            cookies(),
             "-g",
             "-f",
             "best[height<=?720][width<=?1280]",
-            f"--cookies {cookies()}",
             f"{link}",
         ]
         proc = await asyncio.create_subprocess_exec(
@@ -205,7 +208,7 @@ class YouTube:
             "noplaylist": True,
             "quiet": True,
             "extract_flat": "in_playlist",
-            "cookiefile": f"{cookies()}",
+            "cookiefile": f"'{cookies()}'",
         }
         with YoutubeDL(options) as ydl:
             info_dict = ydl.extract_info(f"ytsearch: {q}", download=False)
@@ -232,7 +235,7 @@ class YouTube:
 
         ytdl_opts = {
             "quiet": True,
-            "cookiefile": f"{cookies()}",
+            "cookiefile": f"'{cookies()}'",
         }
 
         ydl = YoutubeDL(ytdl_opts)
@@ -282,7 +285,7 @@ class YouTube:
         vidid = result[query_type]["id"]
         thumbnail = result[query_type]["thumbnails"][0]["url"].split("?")[0]
         return title, duration_min, thumbnail, vidid
-
+        
     async def download(
         self,
         link: str,
@@ -296,8 +299,8 @@ class YouTube:
     ) -> str:
         if videoid:
             link = self.base + link
-        loop = asyncio.get_running_loop()
 
+        @asyncify
         def audio_dl():
             ydl_optssx = {
                 "format": "bestaudio/best",
@@ -307,7 +310,7 @@ class YouTube:
                 "nocheckcertificate": True,
                 "quiet": True,
                 "no_warnings": True,
-                "cookiefile": f"{cookies()}",
+                "cookiefile": f"'{cookies()}'",
                 "prefer_ffmpeg": True,
             }
 
@@ -319,6 +322,7 @@ class YouTube:
             x.download([link])
             return xyz
 
+        @asyncify
         def video_dl():
             ydl_optssx = {
                 "format": "(bestvideo[height<=?720][width<=?1280][ext=mp4])+(bestaudio[ext=m4a])",
@@ -329,7 +333,7 @@ class YouTube:
                 "quiet": True,
                 "no_warnings": True,
                 "prefer_ffmpeg": True,
-                "cookiefile": f"{cookies()}",
+                "cookiefile": f"'{cookies()}'",
             }
 
             x = YoutubeDL(ydl_optssx)
@@ -340,6 +344,7 @@ class YouTube:
             x.download([link])
             return xyz
 
+        @asyncify
         def song_video_dl():
             formats = f"{format_id}+140"
             fpath = f"downloads/{title}"
@@ -353,12 +358,15 @@ class YouTube:
                 "no_warnings": True,
                 "prefer_ffmpeg": True,
                 "merge_output_format": "mp4",
-                "cookiefile": f"{cookies()}",
+                "cookiefile": f"'{cookies()}'",
             }
 
             x = YoutubeDL(ydl_optssx)
-            x.download([link])
+            info = x.extract_info(link)
+            file_path = x.prepare_filename(info)
+            return file_path
 
+        @asyncify
         def song_audio_dl():
             fpath = f"downloads/{title}.%(ext)s"
             ydl_optssx = {
@@ -377,31 +385,32 @@ class YouTube:
                         "preferredquality": "192",
                     }
                 ],
-                "cookiefile": f"{cookies()}",
+                "cookiefile": f"'{cookies()}'",
             }
 
             x = YoutubeDL(ydl_optssx)
-            x.download([link])
+            info = x.extract_info(link)
+            file_path = x.prepare_filename(info)
+            return file_path
 
         if songvideo:
-            await loop.run_in_executor(None, song_video_dl)
-            fpath = f"downloads/{title}.mp4"
-            return fpath
+            return await song_video_dl()
+
         elif songaudio:
-            await loop.run_in_executor(None, song_audio_dl)
-            fpath = f"downloads/{title}.mp3"
-            return fpath
+            return await song_audio_dl()
+
         elif video:
             if await is_on_off(config.YTDOWNLOADER):
                 direct = True
-                downloaded_file = await loop.run_in_executor(None, video_dl)
+                downloaded_file = await video_dl()
             else:
                 command = [
                     "yt-dlp",
+                    f"--cookies",
+                    cookies(),
                     "-g",
                     "-f",
                     "best",
-                    f"--cookies {cookies()}",
                     link,
                 ]
 
@@ -416,11 +425,12 @@ class YouTube:
                     downloaded_file = stdout.decode().split("\n")[0]
                     direct = None
                 else:
-                    downloaded_file = await loop.run_in_executor(None, video_dl)
+                    downloaded_file = await video_dl()
                     direct = True
         else:
             direct = True
-            downloaded_file = await loop.run_in_executor(None, audio_dl)
+            downloaded_file = await audio_dl()
 
         return downloaded_file, direct
-          
+            
+      

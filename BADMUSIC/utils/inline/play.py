@@ -1,13 +1,9 @@
 import math
-
 from pyrogram.types import InlineKeyboardButton
-
 from BADMUSIC.utils.formatters import time_to_seconds
-
 
 def get_progress_bar(percentage):
     umm = math.floor(percentage)
-
     if 0 < umm <= 10:
         return "▰▱▱▱▱▱▱▱▱"
     elif 10 < umm <= 20:
@@ -31,20 +27,42 @@ def get_progress_bar(percentage):
     else:
         return "▱▱▱▱▱▱▱▱▱"
 
+def get_progress_bar2(percentage):
+    umm = math.floor(percentage)
+    
+    progress_messages = [
+        "  ✦ sᴘᴏᴛɪғʏ ᴘʀᴏɢʀᴇss ✦ ",
+        "  🎶 ᴛʜɪs sᴏɴɢ ɪs ᴠᴇʀʏ ʙᴇᴀᴜᴛɪғᴜʟ 🎶 ",
+        "  💿 ᴍᴇʟᴏᴅʏ ғʟᴏᴡs ᴛʜʀᴏᴜɢʜ 🎙️ ",
+        "  🎧 ᴘʟᴀʏɪɴɢ ʏᴏᴜʀ ғᴀᴠᴏʀɪᴛᴇ 🎥 ",
+        "  ✨ ᴛʜᴇ ᴠɪʙᴇs ᴀʀᴇ ʀᴇᴀʟ ✨ ",
+        "  ⚕️ ᴇɴᴊᴏʏ ᴛʜᴇ sᴏᴜɴᴅs ⚕️ ",
+        "  ✩ ʏᴏᴜʀ ᴍᴜsɪᴄ sᴇssɪᴏɴ ✩ ",
+        "  ❤️ ғᴇᴇʟɪɴɢ ᴛʜᴇ ʙᴇᴀᴛs ❤️ ",
+        "  🎧 ᴛʜᴀɴᴋs ғᴏʀ ᴜsɪɴɢ sᴘᴏᴛɪғʏ ᴍᴜsɪᴄ 🎧 ",
+        "  ✩ ᴀʟᴍᴏsᴛ ᴅᴏɴᴇ ᴘʟᴀʏɪɴɢ ✩ ",
+    ]
+    
+    if umm < 100:
+        index = umm // 10
+        return progress_messages[index % len(progress_messages)]
+    else:
+        return "𓆩🎵𓆪  ꜱοиg ɪѕ ᴀϐουτ ᴛο ᴇи∂ 𓆩🎶𓆪"
 
 def stream_markup_timer(_, videoid, chat_id, played, dur):
     played_sec = time_to_seconds(played)
     duration_sec = time_to_seconds(dur)
     percentage = (played_sec / duration_sec) * 100
 
-    bar = get_progress_bar(percentage)  # using for getting the bar
+    bar = get_progress_bar(percentage)
+    timer_selection = get_progress_bar2(percentage)
 
     buttons = [
         [
             InlineKeyboardButton(
                 text=f"{played} {bar} {dur}",
                 callback_data="GetTimer",
-            )
+            ),
         ],
         [
             InlineKeyboardButton(
@@ -56,6 +74,12 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
             ),
         ],
         [
+            InlineKeyboardButton(
+                text=timer_selection,
+                callback_data="GetTimerAnimation",
+            ),
+        ],
+        [
             InlineKeyboardButton(text="▷", callback_data=f"ADMIN Resume|{chat_id}"),
             InlineKeyboardButton(text="II", callback_data=f"ADMIN Pause|{chat_id}"),
             InlineKeyboardButton(text="‣‣I", callback_data=f"ADMIN Skip|{chat_id}"),
@@ -64,7 +88,6 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
         [InlineKeyboardButton(text=_["CLOSEMENU_BUTTON"], callback_data="close")],
     ]
     return buttons
-
 
 def stream_markup(_, videoid, chat_id):
     buttons = [
@@ -87,25 +110,31 @@ def stream_markup(_, videoid, chat_id):
     ]
     return buttons
 
-
 def telegram_markup_timer(_, chat_id, played, dur):
     played_sec = time_to_seconds(played)
     duration_sec = time_to_seconds(dur)
     percentage = (played_sec / duration_sec) * 100
 
-    bar = get_progress_bar(percentage)  # using for getting the bar
+    bar = get_progress_bar(percentage)  # Original progress bar
+    timer_selection = get_progress_bar2(percentage)  # Updated to new function
 
     buttons = [
         [
             InlineKeyboardButton(
                 text=f"{played} {bar} {dur}",
                 callback_data="GetTimer",
-            )
+            ),
         ],
         [
             InlineKeyboardButton(
                 text=_["PL_B_3"],
                 callback_data=f"PanelMarkup None|{chat_id}",
+            ),
+        ],
+        [
+            InlineKeyboardButton(
+                text=timer_selection,
+                callback_data="GetTimerAnimation",
             ),
         ],
         [
@@ -119,7 +148,6 @@ def telegram_markup_timer(_, chat_id, played, dur):
         ],
     ]
     return buttons
-
 
 def telegram_markup(_, chat_id):
     buttons = [
@@ -140,10 +168,9 @@ def telegram_markup(_, chat_id):
         ],
     ]
     return buttons
-
+    
 
 ## Search Query Inline
-
 
 def track_markup(_, videoid, user_id, channel, fplay):
     buttons = [

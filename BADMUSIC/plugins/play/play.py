@@ -135,7 +135,7 @@ async def play_commnd(
     # Proceed with the play command logic if the user is verified and a channel member
     # Add your existing play logic here
     # Example: Send a confirmation or play the video.
-    await message.reply_text("Now playing the video...")
+    # await message.reply_text("Now playing the video...")
 
     mystic = await message.reply_text(
         _["play_2"].format(channel) if channel else _["play_1"]

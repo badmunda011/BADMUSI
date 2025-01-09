@@ -1,7 +1,7 @@
 import random
 import string
 
-from pyrogram import filters
+from pyrogram import Client, filters
 from pyrogram.errors import UserNotParticipant
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 

@@ -1,7 +1,7 @@
 import random
 import string
 
-from pyrogram import Client, filters
+from pyrogram import filters
 from pyrogram.errors import UserNotParticipant
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 
@@ -42,8 +42,9 @@ JOIN_LINK = "https://t.me/HEROKUBIN_01"  # Change this to your channel's join li
     & filters.group
     & ~BANNED_USERS
 )
-async def play_command(
-    client: Client,
+@PlayWrapper
+async def play_commnd(
+    client,
     message: Message,
     _,
     chat_id,
@@ -54,36 +55,34 @@ async def play_command(
     fplay,
 ):
     try:
-        # Check if the user is a member of the required channel
         user_status = await client.get_chat_member(REQUIRED_CHANNEL, message.from_user.id)
         if user_status.status not in ["member", "administrator", "creator"]:
-            raise ValueError("UserNotParticipant")
-    except Exception as e:
-        if str(e) == "UserNotParticipant":
-            join_button = InlineKeyboardMarkup(
+            raise UserNotParticipant
+    except UserNotParticipant:
+        join_button = InlineKeyboardMarkup(
+            [
                 [
-                    [
-                        InlineKeyboardButton(
-                            text="Join Channel",
-                            url=JOIN_LINK,
-                        )
-                    ]
+                    InlineKeyboardButton(
+                        text="Join Channel",
+                        url=JOIN_LINK
+                    )
                 ]
-            )
-            await message.reply_text(
-                "You must join the required channel to play music.",
-                reply_markup=join_button,
-                disable_web_page_preview=True,
-            )
-        else:
-            LOGGER(__name__).error(f"An unexpected error occurred: {e}", exc_info=True)
-            await message.reply_text(
-                "An unexpected error occurred. Please try again later."
-            )
+            ]
+        )
+        await message.reply_text(
+            "You must join the channel to play music.",
+            reply_markup=join_button,
+            disable_web_page_preview=True
+        )
+        return
+    except Exception as e:
+        LOGGER(__name__).error(f"An error occurred: {e}", exc_info=True)
+        await message.reply_text("An error occurred while checking channel membership.")
         return
 
-    # If the user is a member of the channel, proceed to play music
+    # If user is a member of the required channel, continue with the existing logic
     await start_playing(client, message, _, chat_id, video, channel, playmode, url, fplay)
+
     
 async def start_playing(client, message, _, chat_id, video, channel, playmode, url, fplay):
     mystic = await message.reply_text(

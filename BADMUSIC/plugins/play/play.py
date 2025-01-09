@@ -69,15 +69,21 @@ async def play_commnd(
                 ]
             ]
         )
-        return await message.reply_text(
+        await message.reply_text(
             "You must join the channel to play music.",
             reply_markup=join_button,
             disable_web_page_preview=True
         )
+        return
     except Exception as e:
         LOGGER(__name__).error(f"An error occurred: {e}", exc_info=True)
-        return await message.reply_text("An error occurred while checking channel membership.")
+        await message.reply_text("An error occurred while checking channel membership.")
+        return
 
+    # If user is a member of the required channel, continue with the existing logic
+    await start_playing(client, message, _, chat_id, video, channel, playmode, url, fplay)
+
+async def start_playing(client, message, _, chat_id, video, channel, playmode, url, fplay):
     mystic = await message.reply_text(
         _["play_2"].format(channel) if channel else _["play_1"]
     )

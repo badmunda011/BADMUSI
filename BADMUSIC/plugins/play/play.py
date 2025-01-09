@@ -22,7 +22,7 @@ from BADMUSIC.utils.inline.playlist import botplaylist_markup
 from BADMUSIC.utils.logger import play_logs
 from BADMUSIC.utils.stream.stream import stream
 
-REQUIRED_CHANNEL = "@HEROKUBIN_01"  # Change this to your channel's username
+REQUIRED_CHANNEL = "HEROKUBIN_01"  # Change this to your channel's username
 JOIN_LINK = "https://t.me/HEROKUBIN_01"  # Change this to your channel's join link
 
 @app.on_message(

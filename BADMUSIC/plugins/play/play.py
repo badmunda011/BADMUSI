@@ -20,8 +20,54 @@ from BADMUSIC.utils.inline.play import (
 from BADMUSIC.utils.inline.playlist import botplaylist_markup
 from BADMUSIC.utils.logger import play_logs
 from BADMUSIC.utils.stream.stream import stream
+from pyrogram import Client, filters
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, ChatMemberUpdated
+from pyrogram.errors import UserNotParticipant, ChatAdminRequired, FloodWait, UserAlreadyParticipant
+from pyrogram.enums import ChatMemberStatus
+from BADMUSIC import app
 
+# Command
+# PLAY_COMMAND = get_command("PLAY_COMMAND")
 
+# The username and ID of the channel (not the ID)
+CHANNEL_USERNAME = 'BikashGadgetsTech'  # Replace with your channel's username
+CHANNEL_ID = -1001439853191  # Replace with your channel's chat ID (to access programmatically)
+
+# Function to check if the bot is a member of the channel
+async def check_bot_in_channel():
+    try:
+        # Check if the bot is a member of the channel
+        bot_member = await app.get_chat_member(CHANNEL_USERNAME, app.me.id)
+        return bot_member.status in [ChatMemberStatus.MEMBER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER]
+    except UserNotParticipant:
+        return False
+
+# Function to check if a user is a member of the channel
+async def check_channel_membership(user_id):
+    try:
+        member = await app.get_chat_member(CHANNEL_USERNAME, user_id)
+        return member.status in [ChatMemberStatus.MEMBER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER]
+    except UserNotParticipant:
+        return False
+
+# Event to handle user joining or leaving the channel
+@app.on_chat_member_updated()
+async def monitor_member_update(client: Client, member: ChatMemberUpdated):
+    if member.chat.username == CHANNEL_USERNAME:
+        if member.new_chat_member and member.new_chat_member.status in [ChatMemberStatus.MEMBER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER]:
+            user_id = member.new_chat_member.user.id
+            # You can add actions like sending a welcome message if necessary
+        elif member.left_chat_member:
+            user_id = member.left_chat_member.user.id
+            # Perform actions like notifying if needed
+
+# Function to create an inline button for joining the channel
+def inline_button():
+    return InlineKeyboardMarkup([
+        [InlineKeyboardButton("Join Channel", url=f"https://t.me/{CHANNEL_USERNAME}")],
+    ])
+
+# Wrapper for the play command
 @app.on_message(
     filters.command(
         [
@@ -51,6 +97,46 @@ async def play_commnd(
     url,
     fplay,
 ):
+    user_id = message.from_user.id
+
+    # Check if the user is a verified user
+    if not await is_served_user(user_id):
+        await message.reply_text(
+            text="Error, You're Not A Verified User ❌\nPlease Click On The Below Button To Verify Yourself .",
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton(
+                            text="Click For Play Or Verify Here",
+                            url=f"https://t.me/{app.username}?start=verify",
+                        )
+                    ]
+                ]
+            ),
+        )
+        return
+
+    # Check if the bot is in the channel
+    if not await check_bot_in_channel():
+        await message.reply_text(
+            "The bot is not a member of the required channel. Please ensure that the bot is added to the channel and has access to operate.",
+            reply_markup=inline_button()
+        )
+        return
+    
+    # Check if the user is a member of the channel
+    if not await check_channel_membership(user_id):
+        await message.reply_text(
+            "You need to join our channel to proceed. Please click the button below to join.",
+            reply_markup=inline_button()
+        )
+        return
+
+    # Proceed with the play command logic if the user is verified and a channel member
+    # Add your existing play logic here
+    # Example: Send a confirmation or play the video.
+    await message.reply_text("Now playing the video...")
+
     mystic = await message.reply_text(
         _["play_2"].format(channel) if channel else _["play_1"]
     )

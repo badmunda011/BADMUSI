@@ -2,6 +2,7 @@ import random
 import string
 
 from pyrogram import filters
+from pyrogram.errors import UserNotParticipant
 from pyrogram.types import InlineKeyboardMarkup, Message
 
 import config
@@ -21,6 +22,8 @@ from BADMUSIC.utils.inline.playlist import botplaylist_markup
 from BADMUSIC.utils.logger import play_logs
 from BADMUSIC.utils.stream.stream import stream
 
+REQUIRED_CHANNEL = "HEROKUBIN_01"  # Change this to your channel's username
+JOIN_LINK = "https://t.me/YOUR_CHANNEL_JOIN_LINK"  # Change this to your channel's join link
 
 @app.on_message(
     filters.command(
@@ -51,6 +54,19 @@ async def play_commnd(
     url,
     fplay,
 ):
+    try:
+        user_status = await client.get_chat_member(REQUIRED_CHANNEL, message.from_user.id)
+        if user_status.status not in ["member", "administrator", "creator"]:
+            raise UserNotParticipant
+    except UserNotParticipant:
+        return await message.reply_text(
+            f"You must join the [channel]({JOIN_LINK}) to play music.",
+            disable_web_page_preview=True
+        )
+    except Exception as e:
+        LOGGER(__name__).error(f"An error occurred: {e}", exc_info=True)
+        return await message.reply_text("An error occurred while checking channel membership.")
+
     mystic = await message.reply_text(
         _["play_2"].format(channel) if channel else _["play_1"]
     )

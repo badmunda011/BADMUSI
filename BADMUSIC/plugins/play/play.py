@@ -8,7 +8,7 @@ import config
 from config import BANNED_USERS, lyrical
 from BADMUSIC import app, LOGGER, Platform
 from BADMUSIC.utils import seconds_to_min, time_to_seconds
-from BADMUSIC.utils.database import is_video_allowed
+from BADMUSIC.utils.database import is_video_allowed, is_served_user
 from BADMUSIC.utils.decorators.play import PlayWrapper
 from BADMUSIC.utils.formatters import formats
 from BADMUSIC.utils.inline.play import (

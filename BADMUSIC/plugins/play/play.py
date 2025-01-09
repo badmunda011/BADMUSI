@@ -22,7 +22,7 @@ from BADMUSIC.utils.inline.playlist import botplaylist_markup
 from BADMUSIC.utils.logger import play_logs
 from BADMUSIC.utils.stream.stream import stream
 
-REQUIRED_CHANNEL = "HEROKUBIN_01"  # Change this to your channel's username
+REQUIRED_CHANNEL = "@HEROKUBIN_01"  # Change this to your channel's username
 JOIN_LINK = "https://t.me/HEROKUBIN_01"  # Change this to your channel's join link
 
 @app.on_message(
@@ -55,7 +55,10 @@ async def play_commnd(
     fplay,
 ):
     try:
+        # Check if the user is a member of the required channel
         user_status = await client.get_chat_member(REQUIRED_CHANNEL, message.from_user.id)
+        
+        # Check if the user is not a member, admin, or creator
         if user_status.status not in ["member", "administrator", "creator"]:
             raise UserNotParticipant
     except UserNotParticipant:

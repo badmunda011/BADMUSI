@@ -30,8 +30,8 @@ from BADMUSIC import app
 # PLAY_COMMAND = get_command("PLAY_COMMAND")
 
 # The username and ID of the channel (not the ID)
-CHANNEL_USERNAME = 'BikashGadgetsTech'  # Replace with your channel's username
-CHANNEL_ID = -1001439853191  # Replace with your channel's chat ID (to access programmatically)
+CHANNEL_USERNAME = 'HEROKUBIN_01'  # Replace with your channel's username
+CHANNEL_ID = -1002020205239  # Replace with your channel's chat ID (to access programmatically)
 
 # Function to check if the bot is a member of the channel
 async def check_bot_in_channel():

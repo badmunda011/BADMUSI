@@ -3,7 +3,7 @@ import string
 
 from pyrogram import filters
 from pyrogram.errors import UserNotParticipant
-from pyrogram.types import InlineKeyboardMarkup, Message
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 
 import config
 from config import BANNED_USERS, lyrical
@@ -23,7 +23,7 @@ from BADMUSIC.utils.logger import play_logs
 from BADMUSIC.utils.stream.stream import stream
 
 REQUIRED_CHANNEL = "HEROKUBIN_01"  # Change this to your channel's username
-JOIN_LINK = "https://t.me/YOUR_CHANNEL_JOIN_LINK"  # Change this to your channel's join link
+JOIN_LINK = "https://t.me/HEROKUBIN_01"  # Change this to your channel's join link
 
 @app.on_message(
     filters.command(
@@ -59,8 +59,19 @@ async def play_commnd(
         if user_status.status not in ["member", "administrator", "creator"]:
             raise UserNotParticipant
     except UserNotParticipant:
+        join_button = InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        text="Join Channel",
+                        url=JOIN_LINK
+                    )
+                ]
+            ]
+        )
         return await message.reply_text(
-            f"You must join the [channel]({JOIN_LINK}) to play music.",
+            "You must join the channel to play music.",
+            reply_markup=join_button,
             disable_web_page_preview=True
         )
     except Exception as e:

@@ -83,7 +83,6 @@ async def play_commnd(
     # If user is a member of the required channel, continue with the existing logic
     await start_playing(client, message, _, chat_id, video, channel, playmode, url, fplay)
 
-    
 async def start_playing(client, message, _, chat_id, video, channel, playmode, url, fplay):
     mystic = await message.reply_text(
         _["play_2"].format(channel) if channel else _["play_1"]

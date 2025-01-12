@@ -14,7 +14,7 @@ def command(commands: Union[str, List[str]]):
 
 # Command to toggle /infovc on/off
 @app.on_message(command(["infovc"]))
-async def toggle_infovc(_, message: Message):
+async def toggle_infovc(client: Client, message: Message):
     global infovc_enabled
     if len(message.command) > 1:
         state = message.command[1].lower()
@@ -57,7 +57,7 @@ async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMember
             text = (
                 f"#JoinVoiceChat\n"
                 f"Name: {user.mention(style='md')}\n"
-                f"ID: `{user.id}`\n"
+                f"ID: {user.id}\n"
                 f"Action: Joined a voice chat"
             )
 

@@ -53,7 +53,7 @@ async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMember
         ):
             # Construct the message
             text = (
-                f"#JoinVideoChat\n"
+                f"#JoinVoiceChat\n"
                 f"Name: {user.mention}\n"
                 f"ID: {user.id}\n"
                 f"Action: Joined a voice chat"
@@ -67,7 +67,6 @@ async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMember
     except Exception as e:
         # Log any errors with more details
         print(f"Error in user_joined_voice_chat: {e}\nDetails: {chat_member_updated}")
-
 
 # Add the handler for chat member updates
 app.add_handler(ChatMemberUpdatedHandler(user_joined_voice_chat))

@@ -2,12 +2,11 @@ from pyrogram import Client, filters
 from pyrogram.handlers import ChatMemberUpdatedHandler
 from pyrogram.types import ChatMemberUpdated, Message
 from typing import Union, List
-import asyncio
 
 from BADMUSIC import app
 
 # Default state for /infovc
-infovc_enabled = True  # Default to always true
+infovc_enabled = True  # Default to always enabled
 
 # Command decorator
 def command(commands: Union[str, List[str]]):
@@ -41,29 +40,32 @@ async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMember
 
         chat = chat_member_updated.chat
         user = chat_member_updated.new_chat_member.user
-        chat_id = chat.id
+
+        # Ensure we have valid data
+        if not chat or not user:
+            return
 
         # Debug: Print event details
         print(f"ChatMemberUpdated event: {chat_member_updated}")
 
         # Check if the event is related to joining a voice chat
         if (
-            not (chat_member_updated.old_chat_member and chat_member_updated.old_chat_member.is_participant)
-            and (chat_member_updated.new_chat_member and chat_member_updated.new_chat_member.is_participant)
+            chat_member_updated.old_chat_member and not chat_member_updated.old_chat_member.is_participant
+            and chat_member_updated.new_chat_member and chat_member_updated.new_chat_member.is_participant
         ):
             # Construct the message
             text = (
                 f"#JoinVoiceChat\n"
-                f"Name: {user.mention}\n"
-                f"ID: {user.id}\n"
+                f"Name: {user.mention(style='md')}\n"
+                f"ID: `{user.id}`\n"
                 f"Action: Joined a voice chat"
             )
 
-            # Debug: Print the message before sending
+            # Debug: Log the message before sending
             print(f"Message to send: {text}")
 
-            # Send the message
-            await client.send_message(chat_id, text)
+            # Send the message to the group
+            await client.send_message(chat.id, text)
     except Exception as e:
         # Log any errors with more details
         print(f"Error in user_joined_voice_chat: {e}\nDetails: {chat_member_updated}")

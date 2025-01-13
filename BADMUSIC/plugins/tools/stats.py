@@ -43,7 +43,7 @@ GSTATS_COMMAND = get_command("GSTATS_COMMAND")
 STATS_COMMAND = get_command("STATS_COMMAND")
 
 
-@app.on_message(command("STATS_COMMAND") & ~BANNED_USERS)
+@app.on_message(filters.command(STATS_COMMAND) & ~BANNED_USERS)
 @language
 async def stats_global(client, message: Message, _):
     upl = stats_buttons(_, True if message.from_user.id in SUDOERS else False)
@@ -54,7 +54,7 @@ async def stats_global(client, message: Message, _):
     )
 
 
-@app.on_message(command("GSTATS_COMMAND") & ~BANNED_USERS)
+@app.on_message(filters.command(GSTATS_COMMAND) & ~BANNED_USERS)
 @language
 async def gstats_global(client, message: Message, _):
     mystic = await message.reply_text(_["gstats_1"])

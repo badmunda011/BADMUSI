@@ -1,4 +1,4 @@
-from pyrogram.types import InlineKeyboardButton
+from pyrogram.types import InlineKeyboardButton, WebAppInfo
 
 import config
 from config import SUPPORT_GROUP
@@ -46,28 +46,44 @@ def private_panel(_):
 
 def alive_panel(_):
     buttons = [
+            [
+            InlineKeyboardButton(
+                text="📩 ꜱᴛᴀʀᴛ ᴘᴍ",
+                url=f"https://t.me/{app.username}",
+            ),
+        ],
         [
             InlineKeyboardButton(
                 text="✿︎ ᴀᴅᴅ ᴍᴇ ✿︎", url=f"https://t.me/{app.username}?startgroup=true"
             ),
             InlineKeyboardButton(text=_["S_B_3"], url=f"{SUPPORT_GROUP}"),
         ],
+                [
+            InlineKeyboardButton(text="🎧 ꜱᴘᴏᴛɪꜰʏ", web_app=WebAppInfo(url="https://open.spotify.com/"),)
+            
+        ],
     ]
     return buttons
+    
 
 
 def music_start_panel(_):
     buttons = [
         [
             InlineKeyboardButton(
-                text="💠 ᴀᴅᴅ ᴍᴇ ɪɴ ɴᴇᴡ ɢʀᴏᴜᴘ 💠",
+                text="▪️ᴀᴅᴅ ᴍᴇ ɪɴ ɴᴇᴡ ɢʀᴏᴜᴘ▪️",
                 url=f"https://t.me/{app.username}?startgroup=true",
             )
         ],
         [
-            InlineKeyboardButton(text="ᴀʙᴏᴜᴛ 📝", callback_data="about"),
-            InlineKeyboardButton(text="sᴜᴘᴘᴏʀᴛ 🥀", callback_data="support"),
+            InlineKeyboardButton(text="▪️ᴀʙᴏᴜᴛ▪️", callback_data="about"),
+            InlineKeyboardButton(text="▪️sᴜᴘᴘᴏʀᴛ▪️", callback_data="support"),
         ],
-        [InlineKeyboardButton(text="۞ ғᴇᴀᴛᴜʀᴇ ۞", callback_data="feature")],
+        [
+            InlineKeyboardButton(text="▪️ꜱᴘᴏᴛɪꜰʏ▪️", web_app=WebAppInfo(url="https://open.spotify.com/"),)
+            
+        ],
+        [InlineKeyboardButton(text="▪️ ғᴇᴀᴛᴜʀᴇ ▪️", callback_data="feature")],
+        
     ]
     return buttons

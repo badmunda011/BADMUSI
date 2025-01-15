@@ -10,15 +10,6 @@ from yt_dlp import YoutubeDL
 from BADMUSIC import app
 from BADMUSIC.misc import SUDOERS
 
-
-def get_random_cookie():
-    folder_path = f"{os.getcwd()}/cookies"
-    txt_files = glob.glob(os.path.join(folder_path, "*.txt"))
-    if not txt_files:
-        raise FileNotFoundError("No .txt files found in the specified folder.")
-    return random.choice(txt_files)
-
-
 class YouTubeAuthDownloader:
     def __init__(self):
         self.base_url = "https://www.youtube.com/watch?v="
@@ -59,6 +50,13 @@ class YouTubeAuthDownloader:
 
         file_path = await loop.run_in_executor(None, download_content)
         return file_path
+        
+def get_random_cookie():
+    folder_path = f"{os.getcwd()}/cookies"
+    txt_files = glob.glob(os.path.join(folder_path, "*.txt"))
+    if not txt_files:
+        raise FileNotFoundError("No .txt files found in the specified folder.")
+    return random.choice(txt_files)
 
 
 async def check_cookies(video_url):
@@ -67,23 +65,6 @@ async def check_cookies(video_url):
         "format": "bestaudio",
         "quiet": True,
         "cookiefile": cookie_file,
-    }
-    try:
-        with YoutubeDL(opts) as ytdl:
-            ytdl.extract_info(video_url, download=False)
-        return True
-    except:
-        return False
-
-
-async def check_auth_token():
-    video_url = "https://www.youtube.com/watch?v=LLF3GMfNEYU"
-    auth_token = os.getenv("TOKEN_DATA")
-    opts = {
-        "format": "bestaudio",
-        "quiet": True,
-        "username": "oauth2",
-        "password": auth_token,
     }
     try:
         with YoutubeDL(opts) as ytdl:
@@ -108,30 +89,15 @@ async def check_auth_token():
 )
 async def list_formats(client, message):
     status_message = "sᴛᴀᴛᴜs⚣\n\n"
-    status_message += "ᴄᴏᴏᴋɪᴇs⚣︎ ᴄʜᴇᴄᴋɪɴɢ ... \nᴀᴜᴛʜ ᴛᴏᴋᴇɴ⚣︎ ᴄʜᴇᴄᴋɪɴɢ..."
+    status_message += "ᴄᴏᴏᴋɪᴇs⚣︎ ᴄʜᴇᴄᴋɪɴɢ ... "
     status_msg = await message.reply_text(status_message)
 
     cookie_status = await check_cookies("https://www.youtube.com/watch?v=LLF3GMfNEYU")
     status_message = "sᴛᴀᴛᴜs⚣\n\n"
-    status_message += f"ᴄᴏᴏᴋɪᴇs⚣︎ {'✅ ᴀʟɪᴠᴇ' if cookie_status else '❌ ᴅᴇᴀᴅ'}\nAuth Token: Checking..."
+    status_message += f"ᴄᴏᴏᴋɪᴇs⚣︎ {'✅ ᴀʟɪᴠᴇ' if cookie_status else '❌ ᴅᴇᴀᴅ'}"
     await status_msg.edit_text(status_message)
 
     use_token = await check_auth_token()
     status_message = "sᴛᴀᴛᴜs⚣︎\n\n"
     status_message += f"ᴄᴏᴏᴋɪᴇs⚣︎ {'✅ ᴀʟɪᴠᴇ' if cookie_status else '❌ ᴅᴇᴀᴅ'}\n"
-    status_message += f"ᴀᴜᴛʜ ᴛᴏᴋᴇɴ⚣︎ {'✅ ᴀʟɪᴠᴇ' if use_token else '❌ ᴅᴇᴀᴅ'}"
     await status_msg.edit_text(status_message)
-
-    if not use_token:
-        status_message += "\n\n**Generating a new Auth token...**"
-        await status_msg.edit_text(status_message)
-        try:
-            os.system(
-                f"yt-dlp --username oauth2 --password '' -F https://www.youtube.com/watch?v=LLF3GMfNEYU"
-            )
-            await message.reply_text(f"\n**✅ Successfully generated a new token.**")
-        except Exception as ex:
-            await message.reply_text(
-                f"\n**❌ Failed to generate a new token: {str(ex)}**"
-            )
-            

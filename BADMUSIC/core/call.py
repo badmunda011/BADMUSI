@@ -28,7 +28,7 @@ from pytgcalls.types.stream import StreamAudioEnded
 
 import config
 from strings import get_string
-from BADMUSIC import LOGGER, YouTube, app
+from BADMUSIC import LOGGER, Platform, app
 from BADMUSIC.misc import db
 from BADMUSIC.utils.database import (
     add_active_chat,
@@ -101,7 +101,7 @@ async def _clear_(chat_id):
     try:
         await app.send_message(
             chat_id,
-            f"**🎧 ꜱᴏɴɢ ʜᴀꜱ ᴇɴᴅᴇᴅ ɪɴ ᴠᴄ 💞**{text}",
+            f"**🎧 ɴᴇᴡ sᴏɴɢ ʟᴀɢᴀᴏ ɴᴀ ʙᴀʙʏ🥀⁣⁣⁣⁣⁣⁣⁣⁣⁣⁣⁣**",
         )
     except Exception as e:
         print(f"Error sending message: {e}")
@@ -529,7 +529,7 @@ class Call(PyTgCalls):
             check[0]["played"] = 0
             video = True if str(streamtype) == "video" else False
             if "live_" in queued:
-                n, link = await YouTube.video(videoid, True)
+                n, link = await Platform.youtube.video(videoid, True)
                 if n == 0:
                     return await app.send_message(
                         original_chat_id,
@@ -543,7 +543,7 @@ class Call(PyTgCalls):
                     )
                 else:
                     try:
-                        image = await YouTube.thumbnail(videoid, True)
+                        image = await Platform.youtube.thumbnail(videoid, True)
                     except:
                         image = None
                     if image and config.PRIVATE_BOT_MODE == str(True):
@@ -583,7 +583,7 @@ class Call(PyTgCalls):
             elif "vid_" in queued:
                 mystic = await app.send_message(original_chat_id, _["call_8"])
                 try:
-                    file_path, direct = await YouTube.download(
+                    file_path, direct = await Platform.youtube.download(
                         videoid,
                         mystic,
                         videoid=True,
@@ -601,7 +601,7 @@ class Call(PyTgCalls):
                     )
                 else:
                     try:
-                        image = await YouTube.thumbnail(videoid, True)
+                        image = await Platform.youtube.thumbnail(videoid, True)
                     except:
                         image = None
                     if image and config.PRIVATE_BOT_MODE == str(True):
@@ -672,7 +672,7 @@ class Call(PyTgCalls):
                     image = None
                 else:
                     try:
-                        image = await YouTube.thumbnail(videoid, True)
+                        image = await Platform.youtube.thumbnail(videoid, True)
                     except:
                         image = None
                 if video:

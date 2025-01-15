@@ -1,5 +1,3 @@
-
-
 from typing import Dict, List, Union
 
 from BADMUSIC.core.mongo import mongodb
@@ -177,7 +175,6 @@ async def remove_private_chat(chat_id: int):
     if not is_served:
         return
     return await privatedb.delete_one({"chat_id": chat_id})
-
 
 # Auth Users DB
 

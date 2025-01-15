@@ -1,17 +1,18 @@
-
 from pyrogram import filters
-from pyrogram import filters, Client
 from pyrogram.types import Message
+from pyrogram import Client, filters
 
 from config import BANNED_USERS
 from strings import get_command
-from BADMUSIC import YouTube, app
+from BADMUSIC import Platform, app
 from BADMUSIC.core.call import BAD
 from BADMUSIC.misc import db
 from BADMUSIC.utils import AdminRightsCheck, seconds_to_min
 
+# Command
+SEEK_COMMAND = get_command("SEEK_COMMAND")
 
-@Client.on_message(filters.command(["seek"], prefixes=["."]) & filters.group & ~BANNED_USERS)
+@Client.on_message(filters.command(SEEK_COMMAND) & filters.group & ~BANNED_USERS)
 @AdminRightsCheck
 async def seek_comm(cli, message: Message, _, chat_id):
     if len(message.command) == 1:
@@ -45,7 +46,7 @@ async def seek_comm(cli, message: Message, _, chat_id):
         to_seek = duration_played + duration_to_skip + 1
     mystic = await message.reply_text(_["admin_32"])
     if "vid_" in file_path:
-        n, file_path = await YouTube.video(playing[0]["vidid"], True)
+        n, file_path = await Platform.youtube.video(playing[0]["vidid"], True)
         if n == 0:
             return await message.reply_text(_["admin_30"])
     try:
@@ -56,10 +57,11 @@ async def seek_comm(cli, message: Message, _, chat_id):
             duration,
             playing[0]["streamtype"],
         )
-    except:
+    except Exception:
         return await mystic.edit_text(_["admin_34"])
     if message.command[0][-2] == "c":
         db[chat_id][0]["played"] -= duration_to_skip
     else:
         db[chat_id][0]["played"] += duration_to_skip
     await mystic.edit_text(_["admin_33"].format(seconds_to_min(to_seek)))
+    

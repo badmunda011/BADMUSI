@@ -1,11 +1,11 @@
 from pyrogram import filters
-from pyrogram import filters, Client
+from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, Message
 
 import config
 from config import BANNED_USERS
 from strings import get_command
-from BADMUSIC import YouTube, app
+from BADMUSIC import Platform, app
 from BADMUSIC.core.call import BAD
 from BADMUSIC.misc import db
 from BADMUSIC.utils.database import get_loop
@@ -14,8 +14,10 @@ from BADMUSIC.utils.inline.play import stream_markup, telegram_markup
 from BADMUSIC.utils.stream.autoclear import auto_clean
 from BADMUSIC.utils.thumbnails import gen_thumb
 
+# Commands
+SKIP_COMMAND = get_command("SKIP_COMMAND")
 
-@Client.on_message(filters.command(["skip", "next"], prefixes=["."]) & filters.group & ~BANNED_USERS)
+@Client.on_message(filters.command(SKIP_COMMAND) & filters.group & ~BANNED_USERS)
 @AdminRightsCheck
 async def skip(cli, message: Message, _, chat_id):
     if not len(message.command) < 2:
@@ -35,7 +37,12 @@ async def skip(cli, message: Message, _, chat_id):
                             popped = None
                             try:
                                 popped = check.pop(0)
-                            except:
+                                if popped.get("mystic"):
+                                    try:
+                                        await popped.get("mystic").delete()
+                                    except Exception:
+                                        pass
+                            except Exception:
                                 return await message.reply_text(_["admin_16"])
                             if popped:
                                 await auto_clean(popped)
@@ -48,7 +55,7 @@ async def skip(cli, message: Message, _, chat_id):
                                         disable_web_page_preview=True,
                                     )
                                     await BAD.stop_stream(chat_id)
-                                except:
+                                except Exception:
                                     return
                                 break
                     else:
@@ -66,6 +73,11 @@ async def skip(cli, message: Message, _, chat_id):
             popped = check.pop(0)
             if popped:
                 await auto_clean(popped)
+                if popped.get("mystic"):
+                    try:
+                        await popped.get("mystic").delete()
+                    except Exception:
+                        pass
             if not check:
                 await message.reply_text(
                     _["admin_10"].format(message.from_user.first_name),
@@ -73,16 +85,16 @@ async def skip(cli, message: Message, _, chat_id):
                 )
                 try:
                     return await BAD.stop_stream(chat_id)
-                except:
+                except Exception:
                     return
-        except:
+        except Exception:
             try:
                 await message.reply_text(
                     _["admin_10"].format(message.from_user.first_name),
                     disable_web_page_preview=True,
                 )
                 return await BAD.stop_stream(chat_id)
-            except:
+            except Exception:
                 return
     queued = check[0]["file"]
     title = (check[0]["title"]).title()
@@ -93,7 +105,7 @@ async def skip(cli, message: Message, _, chat_id):
     duration_min = check[0]["dur"]
     status = True if str(streamtype) == "video" else None
     if "live_" in queued:
-        n, link = await YouTube.video(videoid, True)
+        n, link = await Platform.youtube.video(videoid, True)
         if n == 0:
             return await message.reply_text(_["admin_11"].format(title))
         try:
@@ -115,13 +127,13 @@ async def skip(cli, message: Message, _, chat_id):
     elif "vid_" in queued:
         mystic = await message.reply_text(_["call_8"], disable_web_page_preview=True)
         try:
-            file_path, direct = await YouTube.download(
+            file_path, direct = await Platform.youtube.download(
                 videoid,
                 mystic,
                 videoid=True,
                 video=status,
             )
-        except:
+        except Exception:
             return await mystic.edit_text(_["call_7"])
         try:
             await BAD.skip_stream(chat_id, file_path, video=status)
@@ -190,6 +202,17 @@ async def skip(cli, message: Message, _, chat_id):
             )
             db[chat_id][0]["mystic"] = run
             db[chat_id][0]["markup"] = "tg"
+        elif "saavn" in videoid:
+            button = telegram_markup(_, chat_id)
+            url = check[0]["url"]
+            details = await Platform.saavn.info(url)
+            run = await message.reply_photo(
+                photo=details["thumb"] or config.TELEGRAM_AUDIO_URL,
+                caption=_["stream_1"].format(title, url, check[0]["dur"], user),
+                reply_markup=InlineKeyboardMarkup(button),
+            )
+            db[chat_id][0]["mystic"] = run
+            db[chat_id][0]["markup"] = "tg"
         else:
             button = stream_markup(_, videoid, chat_id)
             img = await gen_thumb(videoid)
@@ -205,3 +228,4 @@ async def skip(cli, message: Message, _, chat_id):
             )
             db[chat_id][0]["mystic"] = run
             db[chat_id][0]["markup"] = "stream"
+            

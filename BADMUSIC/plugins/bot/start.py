@@ -3,6 +3,7 @@
 
 import asyncio
 import time
+import random
 
 from pyrogram import filters
 from pyrogram.enums import ParseMode
@@ -17,7 +18,7 @@ from youtubesearchpython.__future__ import VideosSearch
 import config
 from config import BANNED_USERS, START_IMG_URL
 from strings import get_string
-from BADMUSIC import HELPABLE, Telegram, YouTube, app
+from BADMUSIC import Platform, app
 from BADMUSIC.misc import SUDOERS, _boot_
 from BADMUSIC.plugins.play.playlist import del_plist_msg
 from BADMUSIC.plugins.sudo.sudoers import sudoers_list
@@ -40,6 +41,9 @@ from .help import paginate_modules
 
 loop = asyncio.get_running_loop()
 
+STICKER = [
+    "CAACAgUAAx0CepnpNQABATUjZypavrymDoERINkF-M3u9JDQ6K8AAhoDAAIOnnlVpyrYiDnVgWYeBA",
+]
 
 @app.on_message(group=-1)
 async def ban_new(client, message):
@@ -62,7 +66,13 @@ async def ban_new(client, message):
 async def start_comm(client, message: Message, _):
     chat_id = message.chat.id
     await add_served_user(message.from_user.id)
-    await message.react("🤡")
+    await message.react("❤️")
+    # Send message to owner when bot is started by a user
+    for owner_id in config.OWNER_ID:
+        await app.send_message(
+            owner_id,
+            f"Bot has been started by {message.from_user.mention} (ID: {message.from_user.id}).",
+        )
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
@@ -80,9 +90,7 @@ async def start_comm(client, message: Message, _):
                     text=_["help_1"],
                     reply_markup=keyboard,
                 )
-        if name[0:4] == "song":
-            await message.reply_text(_["song_2"])
-            return
+        
         if name == "mkdwn_help":
             await message.reply(
                 MARKDOWN,
@@ -133,7 +141,7 @@ async def start_comm(client, message: Message, _):
                     if vidid == "telegram":
                         msg += f"🔗[ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs ᴀɴᴅ ᴀᴜᴅɪᴏs]({config.SUPPORT_GROUP}) ** played {count} ᴛɪᴍᴇs**\n\n"
                     else:
-                        msg += f"🔗 [{title}](https://www.youtube.com/watch?v={vidid}) ** played {count} times**\n\n"
+                        msg += f"🔗 [{title}](https://www..com/watch?v={vidid}) ** played {count} times**\n\n"
                 msg = _["ustats_2"].format(tot, tota, limit) + msg
                 return videoid, msg
 
@@ -142,7 +150,7 @@ async def start_comm(client, message: Message, _):
             except Exception as e:
                 print(e)
                 return
-            thumbnail = await YouTube.thumbnail(videoid, True)
+            thumbnail = await Platform.YouTube.thumbnail(videoid, True)
             await m.delete()
             await message.reply_photo(photo=thumbnail, caption=msg)
             return
@@ -155,7 +163,7 @@ async def start_comm(client, message: Message, _):
                 sender_name = message.from_user.first_name
                 return await app.send_message(
                     config.LOG_GROUP_ID,
-                    f"{message.from_user.mention} ʜᴀs ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <code>sᴜᴅᴏʟɪsᴛ </code>\n\n**ᴜsᴇʀ ɪᴅ :** {sender_id}\n**ᴜsᴇʀ ɴᴀᴍᴇ:** {sender_name}",
+                    f"{message.from_user.mention} ʜᴀs ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <code>sᴜᴅᴏʟɪsᴛ </code>\n\n**ᴜsᴇʀ ɪᴅ :** {sender_id}\n**"
                 )
             return
         if name[0:3] == "lyr":
@@ -163,7 +171,7 @@ async def start_comm(client, message: Message, _):
             lyrical = config.lyrical
             lyrics = lyrical.get(query)
             if lyrics:
-                await Telegram.send_split_text(message, lyrics)
+                await Platform.Telegram.send_split_text(message, lyrics)
                 return
             else:
                 await message.reply_text("ғᴀɪʟᴇᴅ ᴛᴏ ɢᴇᴛ ʟʏʀɪᴄs.")
@@ -219,42 +227,18 @@ async def start_comm(client, message: Message, _):
                 sender_name = message.from_user.first_name
                 return await app.send_message(
                     config.LOG_GROUP_ID,
-                    f"{message.from_user.mention} ʜᴀs ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ<code> ᴠɪᴅᴇᴏ ɪɴғᴏʀᴍᴀᴛɪᴏɴ </code>\n\n**ᴜsᴇʀ ɪᴅ:** {sender_id}\n**ᴜsᴇʀ ɴᴀᴍᴇ** {sender_name}",
+                    f"{message.from_user.mention} ʜᴀs ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ<code> ᴠɪᴅᴇᴏ ɪɴғᴏʀᴍᴀᴛɪᴏɴ </code>\n\n**ᴜsᴇʀ ɪᴅ[...]"
                 )
     else:
 
         try:
             out = music_start_panel(_)
-            bad = await message.reply_text(f"**sᴛᴀʀᴛɪɴɢ ✰︎❣️.....**")
-            await bad.edit_text(f"**sᴛᴀʀᴛɪɴɢ ✰︎.❣️....**")
-            await bad.edit_text(f"**sᴛᴀʀᴛɪɴɢ ✰︎..❣️...**")
-            await bad.edit_text(f"**sᴛᴀʀᴛɪɴɢ ✰︎...❣️..**")
-            await bad.edit_text(f"**sᴛᴀʀᴛɪɴɢ ✰︎....❣️.**")
-            await bad.edit_text(f"**sᴛᴀʀᴛɪɴɢ ✰︎.....❣️**")
-
+            bad = await message.reply_text(f"**ʜᴇʏ 💌**")
             await bad.delete()
-            bads = await message.reply_text("**🤡ᴡ**")
+            bad = await message.reply_text("**ʜᴏᴡ ᴀʀᴇ ʏᴏᴜ 💞**")
             await asyncio.sleep(0.1)
-            await bads.edit_text("**🤡ᴡᴇ**")
-            # await asyncio.sleep(0.1)
-            await bads.edit_text("**🤡ᴡᴇʟ**")
-            #  await asyncio.sleep(0.1)
-            await bads.edit_text("**🤡ᴡᴇʟᴄ**")
-            # await asyncio.sleep(0.1)
-            await bads.edit_text("**🤡ᴡᴇʟᴄᴏ**")
-            # await asyncio.sleep(0.1)
-            await bads.edit_text("**🤡ᴡᴇʟᴄᴏᴍ**")
-            # await asyncio.sleep(0.1)
-            await bads.edit_text("**🤡ᴡᴇʟᴄᴏᴍᴇ**")
-            # await asyncio.sleep(0.1)
-            await bads.edit_text("**🤡ᴡᴇʟᴄᴏᴍᴇ ᴍᴜsɪᴄ**")
-            # await asyncio.sleep(0.1)
-            await bads.edit_text("**🤡ᴡᴇʟᴄᴏᴍᴇ ᴍᴜsɪᴄ ʙᴏᴛ**")
-
-            await bads.edit_text("**🤡ᴡᴇʟᴄᴏᴍᴇ ᴍᴜsɪᴄ ʙᴏᴛ....**")
-
-            await bads.edit_text("**🤡ᴡᴇʟᴄᴏᴍᴇ ᴍᴜsɪᴄ ʙᴏᴛ.**")
-            await bads.edit_text("**🤡ᴡᴇʟᴄᴏᴍᴇ ᴍᴜsɪᴄ ʙᴏᴛ....**")
+            await bad.delete()
+            umm = await bad.reply_sticker(sticker=random.choice(STICKER))
             if message.chat.photo:
 
                 userss_photo = await app.download_media(
@@ -268,7 +252,7 @@ async def start_comm(client, message: Message, _):
 
         except AttributeError:
             chat_photo = "assets/nodp.png"
-        await bads.delete()
+        await bad.delete()
         await message.reply_photo(
             photo=chat_photo,
             caption=_["start_2"].format(message.from_user.mention, app.mention),
@@ -331,7 +315,7 @@ async def welcome(client, message: Message):
     if config.PRIVATE_BOT_MODE == str(True):
         if not await is_served_private_chat(chat_id):
             await message.reply_text(
-                "**ᴛʜɪs ʙᴏᴛ's ᴘʀɪᴠᴀᴛᴇ ᴍᴏᴅᴇ ʜᴀs ʙᴇᴇɴ ᴇɴᴀʙʟᴇᴅ. ᴏɴʟʏ ᴍʏ ᴏᴡɴᴇʀ ᴄᴀɴ ᴜsᴇ ᴛʜɪs. ɪғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜsᴇ ɪᴛ ɪɴ ʏᴏᴜʀ ᴄʜᴀᴛ, ᴀsᴋ ᴍʏ ᴏᴡɴᴇʀ ᴛᴏ ᴀᴜᴛʜᴏʀɪᴢᴇ ʏᴏᴜʀ ᴄʜᴀᴛ.**"
+                "**ᴛʜɪs ʙᴏᴛ's ᴘʀɪᴠᴀᴛᴇ ᴍᴏᴅᴇ ʜᴀs ʙᴇᴇɴ ᴇɴᴀʙʟᴇᴅ. ᴏɴʟʏ ᴍʏ ᴏᴡɴᴇʀ ᴄᴀɴ ᴜsᴇ ᴛʜɪs. ɪғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ [...]"
             )
             return await client.leave_chat(chat_id)
     else:
@@ -389,7 +373,7 @@ async def go_to_home(client, callback_query: CallbackQuery, _):
     )
 
 
-__MODULE__ = "Boᴛ"
+__MODULE__ = "ʙᴏᴛ"
 __HELP__ = f"""
 <b>✦ c sᴛᴀɴᴅs ғᴏʀ ᴄʜᴀɴɴᴇʟ ᴘʟᴀʏ.</b>
 
@@ -413,4 +397,3 @@ __HELP__ = f"""
 
 <b>✧ /authorized</b> - Cʜᴇᴄᴋ ᴀʟʟ ᴀʟʟᴏᴡᴇᴅ ᴄʜᴀᴛs ᴏғ ʏᴏᴜʀ ʙᴏᴛ.
 """
-            

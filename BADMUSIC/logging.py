@@ -2,13 +2,14 @@
 # Owner https://t.me/ll_BAD_MUNDA_ll
 
 import logging
-from pymongo import MongoClient
 import time
-from motor.motor_asyncio import AsyncIOMotorClient as MongoCli
 from logging.handlers import RotatingFileHandler
 
+from motor.motor_asyncio import AsyncIOMotorClient as MongoCli
+from pymongo import MongoClient
+
+import config
 from config import LOG_FILE_NAME
-import config 
 
 logging.basicConfig(
     level=logging.INFO,

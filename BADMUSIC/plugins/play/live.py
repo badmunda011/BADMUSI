@@ -3,11 +3,11 @@
 
 from pyrogram import filters
 
-from config import BANNED_USERS
 from BADMUSIC import Platform, app
 from BADMUSIC.utils.channelplay import get_channeplayCB
 from BADMUSIC.utils.decorators.language import languageCB
 from BADMUSIC.utils.stream.stream import stream
+from config import BANNED_USERS
 
 
 @app.on_callback_query(filters.regex("LiveStream") & ~BANNED_USERS)
@@ -61,4 +61,3 @@ async def play_live_stream(client, CallbackQuery, _):
     else:
         return await mystic.edit_text("Not a live stream")
     await mystic.delete()
-            

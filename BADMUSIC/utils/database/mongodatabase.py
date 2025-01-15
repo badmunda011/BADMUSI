@@ -176,6 +176,7 @@ async def remove_private_chat(chat_id: int):
         return
     return await privatedb.delete_one({"chat_id": chat_id})
 
+
 # Auth Users DB
 
 
@@ -242,6 +243,7 @@ async def is_gbanned_user(user_id: int) -> bool:
     if not user:
         return False
     return True
+
 
 async def add_gban_user(user_id: int):
     is_gbanned = await is_gbanned_user(user_id)

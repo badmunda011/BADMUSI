@@ -1,6 +1,9 @@
 import math
+
 from pyrogram.types import InlineKeyboardButton
+
 from BADMUSIC.utils.formatters import time_to_seconds
+
 
 def get_progress_bar(percentage):
     umm = math.floor(percentage)
@@ -27,9 +30,10 @@ def get_progress_bar(percentage):
     else:
         return "▱▱▱▱▱▱▱▱▱"
 
+
 def get_progress_bar2(percentage):
     umm = math.floor(percentage)
-    
+
     progress_messages = [
         "  ✦ sᴘᴏᴛɪғʏ ᴘʀᴏɢʀᴇss ✦ ",
         "  🎶 ᴛʜɪs sᴏɴɢ ɪs ᴠᴇʀʏ ʙᴇᴀᴜᴛɪғᴜʟ 🎶 ",
@@ -42,12 +46,13 @@ def get_progress_bar2(percentage):
         "  🎧 ᴛʜᴀɴᴋs ғᴏʀ ᴜsɪɴɢ sᴘᴏᴛɪғʏ ᴍᴜsɪᴄ 🎧 ",
         "  ✩ ᴀʟᴍᴏsᴛ ᴅᴏɴᴇ ᴘʟᴀʏɪɴɢ ✩ ",
     ]
-    
+
     if umm < 100:
         index = umm // 10
         return progress_messages[index % len(progress_messages)]
     else:
         return "𓆩🎵𓆪  ꜱοиg ɪѕ ᴀϐουτ ᴛο ᴇи∂ 𓆩🎶𓆪"
+
 
 def stream_markup_timer(_, videoid, chat_id, played, dur):
     played_sec = time_to_seconds(played)
@@ -89,6 +94,7 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
     ]
     return buttons
 
+
 def stream_markup(_, videoid, chat_id):
     buttons = [
         [
@@ -109,6 +115,7 @@ def stream_markup(_, videoid, chat_id):
         [InlineKeyboardButton(text=_["CLOSEMENU_BUTTON"], callback_data="close")],
     ]
     return buttons
+
 
 def telegram_markup_timer(_, chat_id, played, dur):
     played_sec = time_to_seconds(played)
@@ -149,6 +156,7 @@ def telegram_markup_timer(_, chat_id, played, dur):
     ]
     return buttons
 
+
 def telegram_markup(_, chat_id):
     buttons = [
         [
@@ -168,9 +176,10 @@ def telegram_markup(_, chat_id):
         ],
     ]
     return buttons
-    
+
 
 ## Search Query Inline
+
 
 def track_markup(_, videoid, user_id, channel, fplay):
     buttons = [
@@ -278,8 +287,12 @@ def panel_markup_1(_, videoid, chat_id):
             ),
         ],
         [
-            InlineKeyboardButton(text="• ꜱᴋɪᴘ •", callback_data=f"ADMIN Skip|{chat_id}"),
-            InlineKeyboardButton(text="• ꜱᴛᴏᴘ •", callback_data=f"ADMIN Stop|{chat_id}"),
+            InlineKeyboardButton(
+                text="• ꜱᴋɪᴘ •", callback_data=f"ADMIN Skip|{chat_id}"
+            ),
+            InlineKeyboardButton(
+                text="• ꜱᴛᴏᴘ •", callback_data=f"ADMIN Stop|{chat_id}"
+            ),
         ],
         [
             InlineKeyboardButton(
@@ -318,7 +331,9 @@ def panel_markup_2(_, videoid, chat_id):
                 text="• ꜱʜᴜꜰꜰʟᴇ •",
                 callback_data=f"ADMIN Shuffle|{chat_id}",
             ),
-            InlineKeyboardButton(text="• ʟᴏᴏᴘ •", callback_data=f"ADMIN Loop|{chat_id}"),
+            InlineKeyboardButton(
+                text="• ʟᴏᴏᴘ •", callback_data=f"ADMIN Loop|{chat_id}"
+            ),
         ],
         [
             InlineKeyboardButton(

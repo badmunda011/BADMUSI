@@ -4,9 +4,7 @@ from os.path import realpath
 import aiohttp
 from aiohttp import client_exceptions
 
-
 from BADMUSIC.utils.exceptions import UnableToFetchCarbon
-
 
 themes = [
     "3024-night",

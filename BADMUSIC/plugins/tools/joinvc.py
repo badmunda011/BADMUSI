@@ -1,16 +1,19 @@
+from typing import List, Union
+
 from pyrogram import Client, filters
 from pyrogram.handlers import ChatMemberUpdatedHandler
 from pyrogram.types import ChatMemberUpdated, Message
-from typing import Union, List
 
 from BADMUSIC import app
 
 # Default state for /infovc
 infovc_enabled = True  # Default to always enabled
 
+
 # Command decorator
 def command(commands: Union[str, List[str]]):
     return filters.command(commands, prefixes=["/"])
+
 
 # Command to toggle /infovc on/off
 @app.on_message(command(["infovc"]))
@@ -29,8 +32,11 @@ async def toggle_infovc(client: Client, message: Message):
     else:
         await message.reply("⚠️ Usage: /infovc on or /infovc off")
 
+
 # Handler to notify when users join voice chats
-async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMemberUpdated):
+async def user_joined_voice_chat(
+    client: Client, chat_member_updated: ChatMemberUpdated
+):
     global infovc_enabled
 
     try:
@@ -50,8 +56,10 @@ async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMember
 
         # Check if the event is related to joining a voice chat
         if (
-            chat_member_updated.old_chat_member and not chat_member_updated.old_chat_member.is_participant
-            and chat_member_updated.new_chat_member and chat_member_updated.new_chat_member.is_participant
+            chat_member_updated.old_chat_member
+            and not chat_member_updated.old_chat_member.is_participant
+            and chat_member_updated.new_chat_member
+            and chat_member_updated.new_chat_member.is_participant
         ):
             # Construct the message
             text = (
@@ -69,6 +77,7 @@ async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMember
     except Exception as e:
         # Log any errors with more details
         print(f"Error in user_joined_voice_chat: {e}\nDetails: {chat_member_updated}")
+
 
 # Add the handler for chat member updates
 app.add_handler(ChatMemberUpdatedHandler(user_joined_voice_chat))

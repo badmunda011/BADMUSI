@@ -1,10 +1,10 @@
 import os
 from random import randint
+
 from pykeyboard import InlineKeyboard
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
-from config import BANNED_USERS, SERVER_PLAYLIST_LIMIT
 from BADMUSIC import Platform, app
 from BADMUSIC.utils.database import (
     delete_playlist,
@@ -17,8 +17,7 @@ from BADMUSIC.utils.decorators.play import botplaylist_markup
 from BADMUSIC.utils.inline.playlist import get_playlist_markup, warning_markup
 from BADMUSIC.utils.pastebin import BADbin
 from BADMUSIC.utils.stream.stream import stream
-
-
+from config import BANNED_USERS, SERVER_PLAYLIST_LIMIT
 
 # Command
 ADDPLAYLIST_COMMAND = "addplaylist"
@@ -455,5 +454,4 @@ async def del_back_playlist(client, CallbackQuery, _):
     keyboard, count = await get_keyboard(_, user_id)
     return await CallbackQuery.edit_message_text(
         _["playlist_7"].format(count), reply_markup=keyboard
-            )
-        
+    )

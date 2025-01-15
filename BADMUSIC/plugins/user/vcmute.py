@@ -1,18 +1,18 @@
 # Copyright (C) 2024 by Badhacker98@Github, < https://github.com/Badhacker98 >.
 # Owner https://t.me/ll_BAD_MUNDA_ll
 
-from pyrogram import filters
-from pyrogram import filters, Client
+from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from config import BANNED_USERS
-from BADMUSIC import app
 from BADMUSIC.core.call import BAD
 from BADMUSIC.utils.database import is_muted, mute_off, mute_on
 from BADMUSIC.utils.decorators import AdminRightsCheck
+from config import BANNED_USERS
 
 
-@Client.on_message(filters.command(["vcmute"], prefixes=["."]) & filters.group & ~BANNED_USERS)
+@Client.on_message(
+    filters.command(["vcmute"], prefixes=["."]) & filters.group & ~BANNED_USERS
+)
 @AdminRightsCheck
 async def mute_admin(cli, message: Message, _, chat_id):
     if not len(message.command) == 1 or message.reply_to_message:

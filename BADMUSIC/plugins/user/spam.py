@@ -1,8 +1,8 @@
 import asyncio
 
-from pyrogram import filters
-from pyrogram import filters, Client
+from pyrogram import Client, filters
 from pyrogram.types import Message
+
 from BADMUSIC.misc import SUDOERS
 
 spamTask = {}
@@ -148,4 +148,3 @@ async def stopSpam(_, message: Message):
     chat_name = message.chat.title or message.chat.first_name
     del spamTask[chat_id]
     await Client.delete(message, f"Spam task stopped for {chat_name}.")
-

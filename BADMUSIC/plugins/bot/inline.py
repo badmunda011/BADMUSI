@@ -9,9 +9,9 @@ from pyrogram.types import (
 )
 from youtubesearchpython.__future__ import VideosSearch
 
-from config import BANNED_USERS
 from BADMUSIC import app
 from BADMUSIC.utils.inlinequery import answer
+from config import BANNED_USERS
 
 
 @app.on_inline_query(~BANNED_USERS)

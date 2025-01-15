@@ -1,6 +1,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from BADMUSIC import app
+
 
 @Client.on_message(filters.command("start"))
 async def start_message(client: Client, message: Message):

@@ -2,8 +2,8 @@
 # Owner https://t.me/ll_BAD_MUNDA_ll
 
 import asyncio
-import time
 import random
+import time
 
 from pyrogram import filters
 from pyrogram.enums import ParseMode
@@ -16,8 +16,6 @@ from pyrogram.types import (
 from youtubesearchpython.__future__ import VideosSearch
 
 import config
-from config import BANNED_USERS, START_IMG_URL
-from strings import get_string
 from BADMUSIC import Platform, app
 from BADMUSIC.misc import SUDOERS, _boot_
 from BADMUSIC.plugins.play.playlist import del_plist_msg
@@ -36,6 +34,8 @@ from BADMUSIC.utils.decorators.language import LanguageStart
 from BADMUSIC.utils.formatters import get_readable_time
 from BADMUSIC.utils.functions import MARKDOWN, WELCOMEHELP
 from BADMUSIC.utils.inline import alive_panel, music_start_panel, start_pannel
+from config import BANNED_USERS, START_IMG_URL
+from strings import get_string
 
 from .help import paginate_modules
 
@@ -44,6 +44,7 @@ loop = asyncio.get_running_loop()
 STICKER = [
     "CAACAgUAAx0CepnpNQABATUjZypavrymDoERINkF-M3u9JDQ6K8AAhoDAAIOnnlVpyrYiDnVgWYeBA",
 ]
+
 
 @app.on_message(group=-1)
 async def ban_new(client, message):
@@ -90,7 +91,7 @@ async def start_comm(client, message: Message, _):
                     text=_["help_1"],
                     reply_markup=keyboard,
                 )
-        
+
         if name == "mkdwn_help":
             await message.reply(
                 MARKDOWN,
@@ -163,7 +164,7 @@ async def start_comm(client, message: Message, _):
                 sender_name = message.from_user.first_name
                 return await app.send_message(
                     config.LOG_GROUP_ID,
-                    f"{message.from_user.mention} ʜᴀs ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <code>sᴜᴅᴏʟɪsᴛ </code>\n\n**ᴜsᴇʀ ɪᴅ :** {sender_id}\n**"
+                    f"{message.from_user.mention} ʜᴀs ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <code>sᴜᴅᴏʟɪsᴛ </code>\n\n**ᴜsᴇʀ ɪᴅ :** {sender_id}\n**",
                 )
             return
         if name[0:3] == "lyr":
@@ -227,7 +228,7 @@ async def start_comm(client, message: Message, _):
                 sender_name = message.from_user.first_name
                 return await app.send_message(
                     config.LOG_GROUP_ID,
-                    f"{message.from_user.mention} ʜᴀs ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ<code> ᴠɪᴅᴇᴏ ɪɴғᴏʀᴍᴀᴛɪᴏɴ </code>\n\n**ᴜsᴇʀ ɪᴅ[...]"
+                    f"{message.from_user.mention} ʜᴀs ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ<code> ᴠɪᴅᴇᴏ ɪɴғᴏʀᴍᴀᴛɪᴏɴ </code>\n\n**ᴜsᴇʀ ɪᴅ[...]",
                 )
     else:
 

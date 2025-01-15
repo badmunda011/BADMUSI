@@ -1,4 +1,3 @@
-
 import asyncio
 
 from pyrogram import filters
@@ -11,8 +10,6 @@ from pyrogram.types import (
     Message,
 )
 
-from config import BANNED_USERS, adminlist
-from strings import get_string
 from BADMUSIC import app
 from BADMUSIC.core.call import BAD
 from BADMUSIC.misc import SUDOERS
@@ -27,6 +24,8 @@ from BADMUSIC.utils.database import (
     is_nonadmin_chat,
     set_loop,
 )
+from config import BANNED_USERS, adminlist
+from strings import get_string
 
 
 @app.on_message(

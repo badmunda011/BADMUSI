@@ -1,19 +1,20 @@
 import asyncio
 
-from pyrogram import filters
-from pyrogram import filters, Client
+from pyrogram import Client, filters
 from pyrogram.enums import ChatMemberStatus
 from pyrogram.errors import InviteRequestSent
 
 from BADMUSIC import app
 from BADMUSIC.misc import SUDOERS
-from BADMUSIC.utils.database import get_assistant
 from BADMUSIC.utils.bad_ban import admin_filter
+from BADMUSIC.utils.database import get_assistant
 
 links = {}
 
 
-@Client.on_message(filters.command(["join", "userbotjoin"], prefixes=["."])& admin_filter)
+@Client.on_message(
+    filters.command(["join", "userbotjoin"], prefixes=["."]) & admin_filter
+)
 async def join_group(client, message):
     chat_id = message.chat.id
     userbot = await get_assistant(message.chat.id)

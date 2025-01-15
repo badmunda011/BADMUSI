@@ -1,17 +1,18 @@
-from config import OWNER_ID
 from BADMUSIC.misc import SUDOERS
 from BADMUSIC.utils.welcome.support_db import SUPPORTS
+from config import OWNER_ID
 
 
 async def load_support_users():
     support = SUPPORTS()
     for i in OWNER_ID:
-        support.insert_support_user(int(i),"dev")
+        support.insert_support_user(int(i), "dev")
     for i in SUDOERS:
-        support.insert_support_user(int(i),"sudo")
+        support.insert_support_user(int(i), "sudo")
     return
 
-def get_support_staff(want = "all"):
+
+def get_support_staff(want="all"):
     """
     dev, sudo, whitelist, dev_level, sudo_level, all
     """
@@ -19,7 +20,7 @@ def get_support_staff(want = "all"):
     devs = support.get_particular_support("dev")
     sudo = support.get_particular_support("sudo")
 
-    if want in ["dev","dev_level"]:
+    if want in ["dev", "dev_level"]:
         wanted = devs
     elif want == "sudo":
         wanted = sudo

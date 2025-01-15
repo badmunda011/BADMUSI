@@ -1,21 +1,10 @@
 import random
 
-from pyrogram import filters
 from pyrogram import Client, filters
 from pyrogram.types import CallbackQuery, InlineKeyboardMarkup, InputMediaPhoto
 
 import config
-from config import (
-    BANNED_USERS,
-    SOUNCLOUD_IMG_URL,
-    STREAM_IMG_URL,
-    SUPPORT_GROUP,
-    TELEGRAM_AUDIO_URL,
-    TELEGRAM_VIDEO_URL,
-    adminlist,
-    lyrical,
-)
-from BADMUSIC import Platform, app
+from BADMUSIC import Platform
 from BADMUSIC.core.call import BAD
 from BADMUSIC.misc import SUDOERS, db
 from BADMUSIC.utils import seconds_to_min, time_to_seconds
@@ -46,6 +35,16 @@ from BADMUSIC.utils.inline.play import (
 from BADMUSIC.utils.stream.autoclear import auto_clean
 from BADMUSIC.utils.stream.stream import stream
 from BADMUSIC.utils.thumbnails import gen_thumb
+from config import (
+    BANNED_USERS,
+    SOUNCLOUD_IMG_URL,
+    STREAM_IMG_URL,
+    SUPPORT_GROUP,
+    TELEGRAM_AUDIO_URL,
+    TELEGRAM_VIDEO_URL,
+    adminlist,
+    lyrical,
+)
 
 wrong = {}
 

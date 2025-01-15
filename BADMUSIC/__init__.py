@@ -1,9 +1,10 @@
 import json
 import os
-import config
+
 import pytz
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
+import config
 from BADMUSIC.core.bot import BADBOT
 from BADMUSIC.core.dir import dirr
 from BADMUSIC.core.git import git
@@ -12,7 +13,7 @@ from BADMUSIC.misc import dbb, heroku, sudo
 
 from .logging import LOGGER
 
-#time zone
+# time zone
 TIME_ZONE = pytz.timezone(config.TIME_ZONE)
 scheduler = AsyncIOScheduler(timezone=TIME_ZONE)
 

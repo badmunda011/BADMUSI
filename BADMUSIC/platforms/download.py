@@ -2,13 +2,7 @@ import asyncio
 import glob
 import os
 import random
-import re
 from typing import Union
-
-from pyrogram.enums import MessageEntityType
-from pyrogram.types import Message
-from youtubesearchpython.__future__ import VideosSearch
-from yt_dlp import YoutubeDL
 
 
 def cookies():
@@ -70,4 +64,3 @@ async def shell_cmd(cmd):
         else:
             return errorz.decode("utf-8")
     return out.decode("utf-8")
-

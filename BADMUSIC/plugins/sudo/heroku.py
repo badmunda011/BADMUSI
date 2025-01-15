@@ -14,8 +14,6 @@ from git.exc import GitCommandError, InvalidGitRepositoryError
 from pyrogram import filters
 
 import config
-from config import OWNER_ID
-from strings import get_command
 from BADMUSIC import app
 from BADMUSIC.misc import HAPP, SUDOERS, XCB
 from BADMUSIC.utils.database import (
@@ -25,6 +23,8 @@ from BADMUSIC.utils.database import (
 )
 from BADMUSIC.utils.decorators.language import language
 from BADMUSIC.utils.pastebin import BADbin
+from config import OWNER_ID
+from strings import get_command
 
 # Commands
 GETLOG_COMMAND = get_command("GETLOG_COMMAND")

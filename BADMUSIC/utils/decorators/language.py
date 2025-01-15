@@ -1,9 +1,9 @@
 # Copyright (C) 2024 by Badhacker98@Github, < https://github.com/Badhacker98 >.
 # Owner https://t.me/ll_BAD_MUNDA_ll
 
-from strings import get_string
 from BADMUSIC.misc import SUDOERS
 from BADMUSIC.utils.database import get_lang, is_commanddelete_on, is_maintenance
+from strings import get_string
 
 
 def language(mystic):

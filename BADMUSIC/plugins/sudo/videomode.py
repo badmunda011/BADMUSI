@@ -2,11 +2,11 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 import config
-from strings import get_command
 from BADMUSIC import app
 from BADMUSIC.misc import SUDOERS
 from BADMUSIC.utils.database import add_off, add_on
 from BADMUSIC.utils.decorators.language import language
+from strings import get_command
 
 # Commands
 VIDEOMODE_COMMAND = get_command("VIDEOMODE_COMMAND")

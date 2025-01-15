@@ -4,8 +4,6 @@
 from pyrogram.enums import ChatMemberStatus, ChatType
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from config import adminlist
-from strings import get_string
 from BADMUSIC import app
 from BADMUSIC.misc import SUDOERS
 from BADMUSIC.utils.database import (
@@ -17,6 +15,8 @@ from BADMUSIC.utils.database import (
     is_maintenance,
     is_nonadmin_chat,
 )
+from config import adminlist
+from strings import get_string
 
 from ..formatters import int_to_alpha
 

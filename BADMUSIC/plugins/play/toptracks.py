@@ -7,13 +7,8 @@ import asyncio
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup
 
-from config import BANNED_USERS
 from BADMUSIC import app
-from BADMUSIC.utils.database import (
-    get_global_tops,
-    get_particulars,
-    get_userss,
-)
+from BADMUSIC.utils.database import get_global_tops, get_particulars, get_userss
 from BADMUSIC.utils.decorators import languageCB
 from BADMUSIC.utils.inline.playlist import (
     botplaylist_markup,
@@ -21,6 +16,7 @@ from BADMUSIC.utils.inline.playlist import (
     top_play_markup,
 )
 from BADMUSIC.utils.stream.stream import stream
+from config import BANNED_USERS
 
 loop = asyncio.get_running_loop()
 
@@ -127,4 +123,3 @@ async def server_to_play(client, CallbackQuery, _):
         err = e if ex_type == "AssistantErr" else _["general_3"].format(ex_type)
         return await mystic.edit_text(err)
     return await mystic.delete()
-    

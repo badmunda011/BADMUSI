@@ -1,5 +1,5 @@
-from secrets import choice
 from html import escape
+from secrets import choice
 from traceback import format_exc
 
 from pyrogram import enums, filters
@@ -7,21 +7,21 @@ from pyrogram.enums import ChatMemberStatus as CMS
 from pyrogram.errors import ChatAdminRequired, RPCError
 from pyrogram.types import ChatMemberUpdated, Message
 
-from BADMUSIC.logging import LOGGERR
+import config
 from BADMUSIC import app
-from BADMUSIC.utils.decorators import AdminRightsCheck
 from BADMUSIC.utils.permissions import adminsOnly
-
 from BADMUSIC.utils.welcome.antispam_db import GBan
-from BADMUSIC.utils.welcome.greetings_db import Greetings
-from BADMUSIC.utils.welcome.supports import get_support_staff
 from BADMUSIC.utils.welcome.cmd_senders import send_cmd
+from BADMUSIC.utils.welcome.greetings_db import Greetings
 from BADMUSIC.utils.welcome.kbhelpers import ikb
 from BADMUSIC.utils.welcome.msg_types import Types, get_wlcm_type
 from BADMUSIC.utils.welcome.parser import escape_markdown, mention_html
-from BADMUSIC.utils.welcome.string import (build_keyboard, escape_invalid_curly_brackets,
-                                 parse_button)
-import config
+from BADMUSIC.utils.welcome.string import (
+    build_keyboard,
+    escape_invalid_curly_brackets,
+    parse_button,
+)
+from BADMUSIC.utils.welcome.supports import get_support_staff
 
 # Initialize
 gdb = GBan()
@@ -47,22 +47,26 @@ async def escape_mentions_using_curly_brackets_wl(
             first=escape(user.first_name),
             last=escape(user.last_name or user.first_name),
             fullname=" ".join(
-                [
-                    escape(user.first_name),
-                    escape(user.last_name),
-                ]
-                if user.last_name
-                else [escape(user.first_name)],
+                (
+                    [
+                        escape(user.first_name),
+                        escape(user.last_name),
+                    ]
+                    if user.last_name
+                    else [escape(user.first_name)]
+                ),
             ),
             username=(
                 "@" + (await escape_markdown(escape(user.username)))
                 if user.username
-                else (await (mention_html(escape(user.first_name), user.id)))
+                else (await mention_html(escape(user.first_name), user.id))
             ),
-            mention=await (mention_html(escape(user.first_name), user.id)),
-            chatname=escape(m.chat.title)
-            if m.chat.type != ChatType.PRIVATE
-            else escape(user.first_name),
+            mention=await mention_html(escape(user.first_name), user.id),
+            chatname=(
+                escape(m.chat.title)
+                if m.chat.type != ChatType.PRIVATE
+                else escape(user.first_name)
+            ),
             id=user.id,
         )
     else:
@@ -70,8 +74,8 @@ async def escape_mentions_using_curly_brackets_wl(
 
     return teks
 
-@app.on_message(
-    filters.command(["cleanwelcome"]))
+
+@app.on_message(filters.command(["cleanwelcome"]))
 @adminsOnly("can_restrict_members")
 async def cleanwlcm(_, m: Message):
     db = Greetings(m.chat.id)
@@ -92,8 +96,8 @@ async def cleanwlcm(_, m: Message):
     await m.reply_text(f"ᴄᴜʀʀᴇɴᴛ ꜱᴇᴛᴛɪɴɢꜱ:- {status}")
     return
 
-@app.on_message(
-    filters.command(["cleangoodbye"]))
+
+@app.on_message(filters.command(["cleangoodbye"]))
 @adminsOnly("can_restrict_members")
 async def cleangdbye(_, m: Message):
     db = Greetings(m.chat.id)
@@ -114,8 +118,8 @@ async def cleangdbye(_, m: Message):
     await m.reply_text(f"ᴄᴜʀʀᴇɴᴛ ꜱᴇᴛᴛɪɴɢꜱ:- {status}")
     return
 
-@app.on_message(
-    filters.command(["cleanservice"]))
+
+@app.on_message(filters.command(["cleanservice"]))
 @adminsOnly("can_restrict_members")
 async def cleanservice(_, m: Message):
     db = Greetings(m.chat.id)
@@ -137,8 +141,7 @@ async def cleanservice(_, m: Message):
     return
 
 
-@app.on_message(
-    filters.command(["setwelcome"]))
+@app.on_message(filters.command(["setwelcome"]))
 @adminsOnly("can_restrict_members")
 async def save_wlcm(_, m: Message):
     db = Greetings(m.chat.id)
@@ -171,12 +174,12 @@ async def save_wlcm(_, m: Message):
         await m.reply_text("```ᴘʟᴇᴀꜱᴇ ᴘʀᴏᴠɪᴅᴇ ꜱᴏᴍᴇ ᴅᴀᴛᴀ ꜰᴏʀ ᴛʜɪꜱ ᴛᴏ ʀᴇᴘʟʏ ᴡɪᴛʜ!```")
         return
 
-    db.set_welcome_text(text,msgtype,file)
+    db.set_welcome_text(text, msgtype, file)
     await m.reply_text("```ꜱᴀᴠᴇᴅ ᴡᴇʟᴄᴏᴍᴇ 🎉 ```")
     return
 
-@app.on_message(
-    filters.command(["setgoodbye"]))
+
+@app.on_message(filters.command(["setgoodbye"]))
 @adminsOnly("can_restrict_members")
 async def save_gdbye(_, m: Message):
     db = Greetings(m.chat.id)
@@ -210,32 +213,31 @@ async def save_gdbye(_, m: Message):
         await m.reply_text("```ᴘʟᴇᴀꜱᴇ ᴘʀᴏᴠɪᴅᴇ ꜱᴏᴍᴇ ᴅᴀᴛᴀ ꜰᴏʀ ᴛʜɪꜱ ᴛᴏ ʀᴇᴘʟʏ ᴡɪᴛʜ!```")
         return
 
-    db.set_goodbye_text(text,msgtype,file)
+    db.set_goodbye_text(text, msgtype, file)
     await m.reply_text("```ꜱᴀᴠᴇᴅ ɢᴏᴏᴅʙʏᴇ 🎉```")
     return
 
 
-@app.on_message(
-    filters.command(["resetgoodbye"]))
+@app.on_message(filters.command(["resetgoodbye"]))
 @adminsOnly("can_restrict_members")
 async def resetgb(_, m: Message):
     db = Greetings(m.chat.id)
     if m and not m.from_user:
         return
     text = "sᴀᴅ ᴛᴏ sᴇᴇ ʏᴏᴜ ʟᴇᴀᴠɪɴɢ {first}.\ ᴛᴀᴋᴇ ᴄᴀʀᴇ! 🌸"
-    db.set_goodbye_text(text,None)
+    db.set_goodbye_text(text, None)
     await m.reply_text("Ok Done!")
     return
 
-@app.on_message(
-    filters.command(["resetwelcome"]))
+
+@app.on_message(filters.command(["resetwelcome"]))
 @adminsOnly("can_restrict_members")
 async def resetwlcm(_, m: Message):
     db = Greetings(m.chat.id)
     if m and not m.from_user:
         return
     text = "ʜᴇʏ {first}, ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ {chatname} 🥀!"
-    db.set_welcome_text(text,None)
+    db.set_welcome_text(text, None)
     await m.reply_text("Done!")
     return
 
@@ -330,7 +332,7 @@ async def member_has_joined(c: app, member: ChatMemberUpdated):
                     disable_web_page_preview=True,
                 )
             elif UwU:
-                jj = await (await send_cmd(c,mtype))(
+                jj = await (await send_cmd(c, mtype))(
                     member.chat.id,
                     UwU,
                     caption=teks,
@@ -410,7 +412,7 @@ async def member_has_left(c: app, member: ChatMemberUpdated):
                     disable_web_page_preview=True,
                 )
             elif UwU:
-                ooo = await (await send_cmd(c,mtype))(
+                ooo = await (await send_cmd(c, mtype))(
                     member.chat.id,
                     UwU,
                     caption=teks,
@@ -428,8 +430,7 @@ async def member_has_left(c: app, member: ChatMemberUpdated):
         return
 
 
-@app.on_message(
-    filters.command(["welcome"]))
+@app.on_message(filters.command(["welcome"]))
 @adminsOnly("can_restrict_members")
 async def welcome(c: app, m: Message):
     db = Greetings(m.chat.id)
@@ -478,14 +479,14 @@ async def welcome(c: app, m: Message):
     button = await build_keyboard(button)
     button = ikb(button) if button else None
     if not UwU:
-            await c.send_message(
+        await c.send_message(
             m.chat.id,
             text=tek,
             reply_markup=button,
             disable_web_page_preview=True,
         )
     elif UwU:
-            await (await send_cmd(c,mtype))(
+        await (await send_cmd(c, mtype))(
             m.chat.id,
             UwU,
             caption=tek,
@@ -494,8 +495,7 @@ async def welcome(c: app, m: Message):
     return
 
 
-@app.on_message(
-    filters.command(["goodbye"]))
+@app.on_message(filters.command(["goodbye"]))
 @adminsOnly("can_restrict_members")
 async def goodbye(c: app, m: Message):
     db = Greetings(m.chat.id)
@@ -520,7 +520,9 @@ async def goodbye(c: app, m: Message):
             return
         if args[1].lower() == "on":
             db.set_current_goodbye_settings(True)
-            await m.reply_text("```ɪ ᴅᴏɴ'ᴛ ᴡᴀɴᴛ ʙᴜᴛ ɪ ᴡɪʟʟ ꜱᴀʏ ɢᴏᴏᴅʙʏᴇ ᴛᴏ ᴛʜᴇ ꜰᴜɢɪᴛɪᴠᴇꜱ```")
+            await m.reply_text(
+                "```ɪ ᴅᴏɴ'ᴛ ᴡᴀɴᴛ ʙᴜᴛ ɪ ᴡɪʟʟ ꜱᴀʏ ɢᴏᴏᴅʙʏᴇ ᴛᴏ ᴛʜᴇ ꜰᴜɢɪᴛɪᴠᴇꜱ```"
+            )
             return
         if args[1].lower() == "off":
             db.set_current_goodbye_settings(False)
@@ -542,14 +544,14 @@ async def goodbye(c: app, m: Message):
     button = await build_keyboard(button)
     button = ikb(button) if button else None
     if not UwU:
-            await c.send_message(
+        await c.send_message(
             m.chat.id,
             text=tek,
             reply_markup=button,
             disable_web_page_preview=True,
         )
     elif UwU:
-            await (await send_cmd(c,mtype))(
+        await (await send_cmd(c, mtype))(
             m.chat.id,
             UwU,
             caption=tek,
@@ -557,4 +559,3 @@ async def goodbye(c: app, m: Message):
         )
     return
     return
-    

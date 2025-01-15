@@ -1,20 +1,20 @@
-from pyrogram import filters
+from pyrogram import Client, filters
 from pyrogram.types import Message
-from pyrogram import filters, Client
 
-from config import BANNED_USERS, adminlist
-from BADMUSIC import app
 from BADMUSIC.core.call import BAD
 from BADMUSIC.misc import SUDOERS, db
 from BADMUSIC.utils import AdminRightsCheck
 from BADMUSIC.utils.database import is_active_chat, is_nonadmin_chat
 from BADMUSIC.utils.decorators.language import languageCB
 from BADMUSIC.utils.inline import close_markup, speed_markup
+from config import BANNED_USERS, adminlist
 
 checker = []
 
 
-@Client.on_message(filters.command(["speed", "sp"], prefixes=["."]) & filters.group & ~BANNED_USERS)
+@Client.on_message(
+    filters.command(["speed", "sp"], prefixes=["."]) & filters.group & ~BANNED_USERS
+)
 @AdminRightsCheck
 async def playback(cli, message: Message, _, chat_id):
     playing = db.get(chat_id)

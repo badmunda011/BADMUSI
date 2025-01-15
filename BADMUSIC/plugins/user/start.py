@@ -2,10 +2,9 @@
 # Owner https://t.me/ll_BAD_MUNDA_ll
 
 import asyncio
-import time
 import random
+import time
 
-from pyrogram import filters
 from pyrogram import Client, filters
 from pyrogram.enums import ParseMode
 from pyrogram.types import (
@@ -17,10 +16,9 @@ from pyrogram.types import (
 from youtubesearchpython.__future__ import VideosSearch
 
 import config
-from config import BANNED_USERS, START_IMG_URL
-from strings import get_string
-from BADMUSIC import Platform, app
+from BADMUSIC import Platform
 from BADMUSIC.misc import SUDOERS, _boot_
+from BADMUSIC.plugins.bot.help import paginate_modules
 from BADMUSIC.plugins.play.playlist import del_plist_msg
 from BADMUSIC.plugins.sudo.sudoers import sudoers_list
 from BADMUSIC.utils.database import (
@@ -37,14 +35,15 @@ from BADMUSIC.utils.decorators.language import LanguageStart
 from BADMUSIC.utils.formatters import get_readable_time
 from BADMUSIC.utils.functions import MARKDOWN, WELCOMEHELP
 from BADMUSIC.utils.inline import alive_panel, music_start_panel, start_pannel
-
-from BADMUSIC.plugins.bot.help import paginate_modules
+from config import BANNED_USERS, START_IMG_URL
+from strings import get_string
 
 loop = asyncio.get_running_loop()
 
 STICKER = [
     "CAACAgUAAx0CepnpNQABATUjZypavrymDoERINkF-M3u9JDQ6K8AAhoDAAIOnnlVpyrYiDnVgWYeBA",
 ]
+
 
 @Client.on_message(group=-1)
 async def ban_new(client, message):
@@ -365,7 +364,9 @@ async def welcome(client, message: Message):
 async def go_to_home(client, callback_query: CallbackQuery, _):
     out = music_start_panel(_)
     await callback_query.message.edit_text(
-        text=_["start_8"].format(callback_query.message.from_user.mention, Client.mention),
+        text=_["start_8"].format(
+            callback_query.message.from_user.mention, Client.mention
+        ),
         reply_markup=InlineKeyboardMarkup(out),
     )
 
@@ -394,4 +395,3 @@ __HELP__ = f"""
 
 <b>✧ /authorized</b> - Cʜᴇᴄᴋ ᴀʟʟ ᴀʟʟᴏᴡᴇᴅ ᴄʜᴀᴛs ᴏғ ʏᴏᴜʀ ʙᴏᴛ.
 """
-            

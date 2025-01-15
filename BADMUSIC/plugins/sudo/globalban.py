@@ -4,8 +4,6 @@ from pyrogram import filters
 from pyrogram.errors import FloodWait
 from pyrogram.types import Message
 
-from config import BANNED_USERS
-from strings import get_command
 from BADMUSIC import app
 from BADMUSIC.misc import SUDOERS
 from BADMUSIC.utils import get_readable_time
@@ -18,6 +16,8 @@ from BADMUSIC.utils.database import (
     remove_banned_user,
 )
 from BADMUSIC.utils.decorators.language import language
+from config import BANNED_USERS
+from strings import get_command
 
 # Command
 GBAN_COMMAND = get_command("GBAN_COMMAND")
@@ -143,10 +143,10 @@ from pyrogram import filters
 from pyrogram.enums import MessageEntityType
 from pyrogram.types import Message, User
 
-from config import BANNED_USERS
 from BADMUSIC import app
 from BADMUSIC.misc import SUDOERS
 from BADMUSIC.utils.database import add_banned_user, is_banned_user, remove_banned_user
+from config import BANNED_USERS
 
 
 async def extract_user(m: Message) -> User:

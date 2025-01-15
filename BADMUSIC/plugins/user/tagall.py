@@ -7,9 +7,7 @@ from BADMUSIC.utils.bad_ban import admin_filter
 SPAM_CHATS = []
 
 
-@Client.on_message(
-    filters.command(["utag"], prefixes=["."]) & admin_filter
-)
+@Client.on_message(filters.command(["utag"], prefixes=["."]) & admin_filter)
 async def tag_all_users(client, _, message):
     if message.chat.id in SPAM_CHATS:
         return await message.reply_text(
@@ -96,4 +94,3 @@ async def cancelcmd(_, message):
     else:
         await message.reply_text("**ɴᴏ ᴘʀᴏᴄᴇss ᴏɴɢᴏɪɴɢ!**")
         return
-      

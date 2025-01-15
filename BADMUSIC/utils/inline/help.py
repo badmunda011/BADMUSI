@@ -3,8 +3,8 @@
 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from config import SUPPORT_GROUP
 from BADMUSIC import app
+from config import SUPPORT_GROUP
 
 
 def support_group_markup(_):

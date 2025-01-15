@@ -3,9 +3,9 @@ from sys import exit as exiter
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 
-from BADMUSIC.logging import LOGGERR
 from BADMUSIC.logging import *
-from config import MONGO_DB_URI, DB_NAME
+from BADMUSIC.logging import LOGGERR
+from config import DB_NAME, MONGO_DB_URI
 
 try:
     shizuchat_db_client = MongoClient(MONGO_DB_URI)

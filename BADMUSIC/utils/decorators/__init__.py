@@ -2,5 +2,5 @@
 # Owner https://t.me/ll_BAD_MUNDA_ll
 
 from .admins import *
-from .language import *
 from .asyncify import asyncify
+from .language import *

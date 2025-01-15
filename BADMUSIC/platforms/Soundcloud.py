@@ -2,8 +2,8 @@ from os import path
 
 from yt_dlp import YoutubeDL
 
-from BADMUSIC.utils.formatters import seconds_to_min
 from BADMUSIC.utils.decorators import asyncify
+from BADMUSIC.utils.formatters import seconds_to_min
 
 
 class SoundCloud:
@@ -36,4 +36,3 @@ class SoundCloud:
             "filepath": xyz,
         }
         return track_details, xyz
-      

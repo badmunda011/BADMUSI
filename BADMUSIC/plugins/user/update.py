@@ -1,26 +1,20 @@
-
 import asyncio
-import math
 import os
 import shutil
 import socket
 from datetime import datetime
 
 import dotenv
-import heroku3
 import requests
 import urllib3
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError
-from pyrogram import filters
-from pyrogram import filters, Client
+from pyrogram import Client, filters
 
 import config
-from config import OWNER_ID
-from strings import get_command
+from BADMUSIC.misc import HAPP
 from BADMUSIC.misc import SUDOERS as SUDO_USER
-from BADMUSIC import app
-from BADMUSIC.misc import HAPP, SUDOERS, XCB
+from BADMUSIC.misc import XCB
 from BADMUSIC.utils.database import (
     get_active_chats,
     remove_active_chat,
@@ -28,6 +22,8 @@ from BADMUSIC.utils.database import (
 )
 from BADMUSIC.utils.decorators.language import language
 from BADMUSIC.utils.pastebin import BADbin
+from config import OWNER_ID
+from strings import get_command
 
 # Commands
 GETLOG_COMMAND = get_command("GETLOG_COMMAND")
@@ -105,6 +101,7 @@ async def varget_(client, message, _):
             await message.reply_text(_["heroku_4"])
         else:
             return await message.reply_text(f"**{check_var}:** `{str(output)}`")
+
 
 @Client.on_message(filters.command("gitpull", prefixes=".") & OWNER_ID)
 @language
@@ -221,12 +218,9 @@ async def restart_(_, message):
 
 
 import requests
-from pyrogram import filters
+from pyrogram import Client, filters
 
 import config
-from BADMUSIC import app
-from BADMUSIC.misc import SUDOERS
-from pyrogram import filters, Client
 
 # Heroku API base URL
 HEROKU_API_URL = "https://api.heroku.com/apps"

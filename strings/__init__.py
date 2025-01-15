@@ -1,4 +1,3 @@
-
 # All rights reserved
 
 import os
@@ -48,7 +47,7 @@ for filename in os.listdir(r"./strings/langs/"):
     try:
         languages_present[language_name] = languages[language_name]["name"]
     except Exception as e:
-                import traceback 
-                print(f"Error loading {filename}: {e}")
-                traceback.print_exc()
-        
+        import traceback
+
+        print(f"Error loading {filename}: {e}")
+        traceback.print_exc()

@@ -19,7 +19,7 @@ API_HASH = getenv("API_HASH")
 BOT_TOKEN = getenv("BOT_TOKEN")
 
 # Get Your bot username
-BOT_USERNAME = getenv("BOT_USERNAME" , "FlopMusic_Bot")
+BOT_USERNAME = getenv("BOT_USERNAME", "FlopMusic_Bot")
 
 # Bot id
 BOT_ID = int(getenv("BOT_ID", "7597992001"))
@@ -84,9 +84,7 @@ OWNER_ID = list(
 
 # make your bots privacy from telegra.ph and put your url here
 
-PRIVACY_LINK = getenv(
-    "PRIVACY_LINK", "https://envs.sh/SL4.jpg"
-)
+PRIVACY_LINK = getenv("PRIVACY_LINK", "https://envs.sh/SL4.jpg")
 
 
 # Get it from http://dashboard.heroku.com/account
@@ -285,10 +283,12 @@ def time_to_seconds(time):
     stringt = str(time)
     return sum(int(x) * 60**i for i, x in enumerate(reversed(stringt.split(":"))))
 
+
 def seconds_to_time(seconds):
     minutes = seconds // 60
     remaining_seconds = seconds % 60
     return f"{minutes:02d}:{remaining_seconds:02d}"
+
 
 DURATION_LIMIT = int(time_to_seconds(f"{DURATION_LIMIT_MIN}:00"))
 SONG_DOWNLOAD_DURATION_LIMIT = int(time_to_seconds(f"{SONG_DOWNLOAD_DURATION}:00"))

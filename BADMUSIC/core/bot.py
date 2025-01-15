@@ -1,12 +1,10 @@
 # Copyright (C) 2024 by Badhacker98@Github, < https://github.com/Badhacker98 >.
 # Owner https://t.me/ll_BAD_MUNDA_ll
 
-import asyncio
-import threading
 
 import uvloop
 from flask import Flask
-from pyrogram import Client, idle
+from pyrogram import Client
 from pyrogram.enums import ChatMemberStatus
 from pyrogram.types import (
     BotCommand,
@@ -36,7 +34,7 @@ def run():
     app.run(host="0.0.0.0", port=8000, debug=False)
 
 
-#BADBOT
+# BADBOT
 class BADBOT(Client):
     def __init__(self):
         LOGGER(__name__).info(f"Starting Bot")
@@ -58,13 +56,13 @@ class BADBOT(Client):
         # Create the button
         button = InlineKeyboardMarkup(
             [
-                        [
-            InlineKeyboardButton(
-                text="๏ ꜱᴛᴀʀᴛ ᴛᴏ ᴘᴍ ๏",
-                url=f"https://t.me/{self.username}?start=start",
-            ),
-           ],
-             [
+                [
+                    InlineKeyboardButton(
+                        text="๏ ꜱᴛᴀʀᴛ ᴛᴏ ᴘᴍ ๏",
+                        url=f"https://t.me/{self.username}?start=start",
+                    ),
+                ],
+                [
                     InlineKeyboardButton(
                         text="๏ ᴏᴡɴᴇʀ ๏",
                         url=f"https://t.me/II_BAD_BABY_II",
@@ -72,15 +70,14 @@ class BADBOT(Client):
                     InlineKeyboardButton(
                         text="๏ ᴜᴘᴅᴀᴛᴇ ๏",
                         url=f"https://t.me/HEROKUBIN_01",
-                    )
-              ],
+                    ),
+                ],
                 [
                     InlineKeyboardButton(
                         text="๏ ᴀᴅᴅ ᴍᴇ ɪɴ ɢʀᴏᴜᴘ ๏",
                         url=f"https://t.me/{self.username}?startgroup=true",
                     )
-                ]
- 
+                ],
             ]
         )
 

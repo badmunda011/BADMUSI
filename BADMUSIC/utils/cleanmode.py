@@ -1,5 +1,5 @@
-from config import LOG_GROUP_ID
 from BADMUSIC import app
+from config import LOG_GROUP_ID
 
 protected_messages = {}
 

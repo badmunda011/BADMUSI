@@ -1,5 +1,3 @@
-
-
 import os
 import re
 import subprocess
@@ -9,14 +7,12 @@ from inspect import getfullargspec
 from io import StringIO
 from time import time
 
-from pyrogram import filters
-from pyrogram import filters, Client
+from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
-from config import OWNER_ID
-from BADMUSIC import app
 from BADMUSIC.misc import SUDOERS
 from BADMUSIC.utils.cleanmode import protect_message
+from config import OWNER_ID
 
 
 async def aexec(code, client, message):
@@ -151,7 +147,9 @@ async def forceclose_command(_, CallbackQuery):
     & ~filters.forwarded
     & ~filters.via_bot
 )
-@Client.on_message(filters.command("sh") & SUDOERS & ~filters.forwarded & ~filters.via_bot)
+@Client.on_message(
+    filters.command("sh") & SUDOERS & ~filters.forwarded & ~filters.via_bot
+)
 async def shellrunner(_, message: Message):
     if len(message.command) < 2:
         return await edit_or_reply(message, text="<b>ᴇxᴀᴍᴩʟᴇ :</b>\n/sh git pull")

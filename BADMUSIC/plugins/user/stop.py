@@ -1,8 +1,6 @@
-
 import asyncio
 
-from pyrogram import filters
-from pyrogram import filters, Client
+from pyrogram import Client, filters
 from pyrogram.enums import ChatMemberStatus
 from pyrogram.errors import UserNotParticipant
 from pyrogram.types import (
@@ -12,9 +10,6 @@ from pyrogram.types import (
     Message,
 )
 
-from config import BANNED_USERS, adminlist
-from strings import get_string
-from BADMUSIC import app
 from BADMUSIC.core.call import BAD
 from BADMUSIC.misc import SUDOERS
 from BADMUSIC.plugins import extra_plugins_enabled
@@ -28,9 +23,15 @@ from BADMUSIC.utils.database import (
     is_nonadmin_chat,
     set_loop,
 )
+from config import BANNED_USERS, adminlist
+from strings import get_string
 
 
-@Client.on_message(filters.command(["stop", "end", "cstop", "cend"], prefixes=["."]) & filters.group & ~BANNED_USERS)
+@Client.on_message(
+    filters.command(["stop", "end", "cstop", "cend"], prefixes=["."])
+    & filters.group
+    & ~BANNED_USERS
+)
 async def stop_music(cli, message: Message):
     if await is_maintenance() is False:
         if message.from_user.id not in SUDOERS:
@@ -99,11 +100,9 @@ async def stop_music(cli, message: Message):
 
 import random
 
-from pyrogram import filters
+from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from BADMUSIC import app
-from pyrogram import filters, Client
 from BADMUSIC.utils.database import get_assistant
 
 photo = [

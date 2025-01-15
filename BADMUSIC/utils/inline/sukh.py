@@ -1,5 +1,3 @@
-from typing import Union
-
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 
@@ -37,4 +35,3 @@ def first_page(_):
         ]
     )
     return first_page_menu
-

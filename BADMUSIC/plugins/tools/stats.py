@@ -10,8 +10,6 @@ from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
 from pytgcalls.__version__ import __version__ as pytgver
 
 import config
-from config import BANNED_USERS
-from strings import get_command
 from BADMUSIC import Platform, app
 from BADMUSIC.core.userbot import assistants
 from BADMUSIC.misc import SUDOERS, pymongodb
@@ -35,6 +33,8 @@ from BADMUSIC.utils.inline.stats import (
     stats_buttons,
     top_ten_stats_markup,
 )
+from config import BANNED_USERS
+from strings import get_command
 
 loop = asyncio.get_running_loop()
 

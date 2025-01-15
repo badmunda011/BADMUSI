@@ -1,12 +1,12 @@
 from pyrogram import filters
 from pyrogram.types import Message
 
-from config import BANNED_USERS
-from strings import get_command
 from BADMUSIC import app
 from BADMUSIC.misc import SUDOERS
 from BADMUSIC.utils.database import add_gban_user, remove_gban_user
 from BADMUSIC.utils.decorators.language import language
+from config import BANNED_USERS
+from strings import get_command
 
 # Command
 BLOCK_COMMAND = get_command("BLOCK_COMMAND")

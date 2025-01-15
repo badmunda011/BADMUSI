@@ -1,8 +1,6 @@
 from pyrogram import filters
 from pyrogram.types import Message
 
-from config import BANNED_USERS, adminlist
-from strings import get_command
 from BADMUSIC import app
 from BADMUSIC.utils.database import (
     delete_authuser,
@@ -12,6 +10,8 @@ from BADMUSIC.utils.database import (
 )
 from BADMUSIC.utils.decorators import AdminActual, language
 from BADMUSIC.utils.formatters import int_to_alpha
+from config import BANNED_USERS, adminlist
+from strings import get_command
 
 # Command
 AUTH_COMMAND = get_command("AUTH_COMMAND")

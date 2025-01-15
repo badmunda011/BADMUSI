@@ -52,4 +52,3 @@ class Resso:
             "thumb": thumbnail,
         }
         return track_details, vidid
-      

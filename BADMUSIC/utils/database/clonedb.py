@@ -1,5 +1,4 @@
-from BADMUSIC.core.mongo import mongodb, pymongodb
-from typing import Dict, List, Union
+from BADMUSIC.core.mongo import mongodb
 
 cloneownerdb = mongodb.cloneownerdb
 clonebotdb = mongodb.clonebotdb

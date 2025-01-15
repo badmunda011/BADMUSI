@@ -1,8 +1,9 @@
 import asyncio
 import random
+
 from pyrogram import Client, filters
-from pyrogram.types import Message
 from pyrogram.raw.functions.messages import DeleteHistory
+from pyrogram.types import Message
 
 from BADMUSIC.core.userbot import assistants
 from BADMUSIC.utils.database import get_client
@@ -56,4 +57,3 @@ async def sg(client: Client, message: Message):
         pass
 
     await lol.delete()
-  

@@ -165,4 +165,3 @@ def top_ten_stats_markup(_):
         ]
     )
     return upl
-                

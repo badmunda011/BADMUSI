@@ -95,4 +95,3 @@ class Spotify:
                     info += fetched
             results.append(info)
         return results, artist_id
-      

@@ -1,11 +1,8 @@
-from pyrogram import filters
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, Message
 
 import config
-from config import BANNED_USERS
-from strings import get_command
-from BADMUSIC import Platform, app
+from BADMUSIC import Platform
 from BADMUSIC.core.call import BAD
 from BADMUSIC.misc import db
 from BADMUSIC.utils.database import get_loop
@@ -13,9 +10,12 @@ from BADMUSIC.utils.decorators import AdminRightsCheck
 from BADMUSIC.utils.inline.play import stream_markup, telegram_markup
 from BADMUSIC.utils.stream.autoclear import auto_clean
 from BADMUSIC.utils.thumbnails import gen_thumb
+from config import BANNED_USERS
+from strings import get_command
 
 # Commands
 SKIP_COMMAND = get_command("SKIP_COMMAND")
+
 
 @Client.on_message(filters.command(SKIP_COMMAND) & filters.group & ~BANNED_USERS)
 @AdminRightsCheck
@@ -228,4 +228,3 @@ async def skip(cli, message: Message, _, chat_id):
             )
             db[chat_id][0]["mystic"] = run
             db[chat_id][0]["markup"] = "stream"
-            

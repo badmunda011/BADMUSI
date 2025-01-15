@@ -1,9 +1,9 @@
 # Copyright (C) 2024 by Badhacker98@Github, < https://github.com/Badhacker98 >.
 # Owner https://t.me/ll_BAD_MUNDA_ll
 
-from config import LOG, LOG_GROUP_ID
 from BADMUSIC import app
 from BADMUSIC.utils.database import is_on_off
+from config import LOG, LOG_GROUP_ID
 
 
 async def play_logs(message, streamtype):

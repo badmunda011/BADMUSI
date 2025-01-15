@@ -4,7 +4,7 @@ from re import compile as compile_re
 from typing import List
 
 from pyrogram.enums import ChatType
-from pyrogram.types import InlineKeyboardButton, Message
+from pyrogram.types import Message
 
 from BADMUSIC import TIME_ZONE
 from BADMUSIC.utils.welcome.parser import escape_markdown
@@ -26,7 +26,7 @@ async def extract_time(m: Message, time_val: str):
         elif unit == "h":
             bantime = initial_time + timedelta(hours=int(time_num))
         elif unit == "d":
-            bantime = initial_time + timedelta(days=int(time_num)) 
+            bantime = initial_time + timedelta(days=int(time_num))
         else:
             # how even...?
             return ""
@@ -138,12 +138,14 @@ async def escape_mentions_using_curly_brackets(
                 else m.from_user.mention
             ),
             fullname=" ".join(
-                [
-                    escape(m.from_user.first_name),
-                    escape(m.from_user.last_name),
-                ]
-                if m.from_user.last_name
-                else [escape(m.from_user.first_name)],
+                (
+                    [
+                        escape(m.from_user.first_name),
+                        escape(m.from_user.last_name),
+                    ]
+                    if m.from_user.last_name
+                    else [escape(m.from_user.first_name)]
+                ),
             ),
             chatname=chat_name,
             id=m.from_user.id,

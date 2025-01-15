@@ -2,7 +2,6 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 
 from BADMUSIC.misc import SUDOERS as SUDO_USER
-from config import *
 
 R = "MUSICBOT COMMAND"
 

@@ -19,4 +19,3 @@ async def bot_up_time():
     bot_up_time = int(time.time() - _boot_)
     BOT_UP = f"{get_readable_time(bot_up_time)}"
     return BOT_UP
-  

@@ -2,17 +2,16 @@
 # Owner https://t.me/ll_BAD_MUNDA_ll
 
 
+from pyrogram import Client
 from pyrogram.types import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     InlineQueryResultPhoto,
 )
-from pyrogram import Client, filters
 from youtubesearchpython.__future__ import VideosSearch
 
-from config import BANNED_USERS
-from BADMUSIC import app
 from BADMUSIC.utils.inlinequery import answer
+from config import BANNED_USERS
 
 
 @Client.on_inline_query(~BANNED_USERS)

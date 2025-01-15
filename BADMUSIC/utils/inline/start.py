@@ -1,8 +1,9 @@
 from pyrogram.types import InlineKeyboardButton, WebAppInfo
 
 import config
-from config import SUPPORT_GROUP
 from BADMUSIC import app
+from config import SUPPORT_GROUP
+
 
 def start_pannel(_):
     buttons = [
@@ -46,7 +47,7 @@ def private_panel(_):
 
 def alive_panel(_):
     buttons = [
-            [
+        [
             InlineKeyboardButton(
                 text="📩 ꜱᴛᴀʀᴛ ᴘᴍ",
                 url=f"https://t.me/{app.username}",
@@ -58,13 +59,14 @@ def alive_panel(_):
             ),
             InlineKeyboardButton(text=_["S_B_3"], url=f"{SUPPORT_GROUP}"),
         ],
-                [
-            InlineKeyboardButton(text="🎧 ꜱᴘᴏᴛɪꜰʏ", web_app=WebAppInfo(url="https://open.spotify.com/"),)
-            
+        [
+            InlineKeyboardButton(
+                text="🎧 ꜱᴘᴏᴛɪꜰʏ",
+                web_app=WebAppInfo(url="https://open.spotify.com/"),
+            )
         ],
     ]
     return buttons
-    
 
 
 def music_start_panel(_):
@@ -80,10 +82,11 @@ def music_start_panel(_):
             InlineKeyboardButton(text="▪️sᴜᴘᴘᴏʀᴛ▪️", callback_data="support"),
         ],
         [
-            InlineKeyboardButton(text="▪️ꜱᴘᴏᴛɪꜰʏ▪️", web_app=WebAppInfo(url="https://open.spotify.com/"),)
-            
+            InlineKeyboardButton(
+                text="▪️ꜱᴘᴏᴛɪꜰʏ▪️",
+                web_app=WebAppInfo(url="https://open.spotify.com/"),
+            )
         ],
         [InlineKeyboardButton(text="▪️ ғᴇᴀᴛᴜʀᴇ ▪️", callback_data="feature")],
-        
     ]
     return buttons

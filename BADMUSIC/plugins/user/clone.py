@@ -1,12 +1,8 @@
-from config import API_ID, API_HASH
-from pyrogram import filters
-import os
-import re
-import asyncio
-import time
 from pyrogram import *
-from pyrogram.types import * 
 from pyrogram import Client, filters
+from pyrogram.types import *
+
+from config import API_HASH, API_ID
 
 
 @Client.on_message(filters.command(["clone"], prefixes=["."]))
@@ -17,7 +13,13 @@ async def clone(bot: Client, msg: Message):
     phone = msg.command[1]
     try:
         await text.edit("Booting Your Client")
-        client = Client(name="BADMUSIC", api_id=API_ID, api_hash=API_HASH, session_string=phone, plugins=dict(root="BADMUSIC/plugins/user"))
+        client = Client(
+            name="BADMUSIC",
+            api_id=API_ID,
+            api_hash=API_HASH,
+            session_string=phone,
+            plugins=dict(root="BADMUSIC/plugins/user"),
+        )
         await client.start()
         user = await client.get_me()
         await msg.reply(f"Your Client Has Been Successfully As {user.first_name} ✅.")

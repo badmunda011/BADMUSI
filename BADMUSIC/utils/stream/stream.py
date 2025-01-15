@@ -142,7 +142,9 @@ async def stream(
         link = result["link"]
         vidid = result["vidid"]
         title = (result["title"]).title()
-        duration_min = result.get("duration_min", "Unknown")  # Default to "Unknown" if missing
+        duration_min = result.get(
+            "duration_min", "Unknown"
+        )  # Default to "Unknown" if missing
         duration_sec = result.get("duration_sec", 0)  # Default to 0 if missing
         thumbnail = result["thumb"]
         status = True if video else None
@@ -211,7 +213,7 @@ async def stream(
             )
             db[chat_id][0]["mystic"] = run
             db[chat_id][0]["markup"] = "stream"
-            
+
     elif "saavn" in streamtype:
         if streamtype == "saavn_track":
             if result["duration_sec"] == 0:

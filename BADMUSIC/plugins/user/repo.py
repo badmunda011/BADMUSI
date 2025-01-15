@@ -1,9 +1,6 @@
-import asyncio
-
-from BADMUSIC import app
-from pyrogram import filters
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+
 
 @Client.on_message(filters.command(["repo"], prefixes=["."]))
 async def start(client: Client, message: Message):
@@ -12,28 +9,24 @@ async def start(client: Client, message: Message):
         caption=f"❤️ ʜᴇʏ {message.from_user.mention} [☆ ʀᴇᴘᴏ 💗](https://github.com/Badhacker98/BADMUSIC/fork)",
         reply_markup=InlineKeyboardMarkup(
             [
-               [
-            InlineKeyboardButton(
-                text="☆ ᴏᴡɴᴇʀ 💗 ", url=f"https://t.me/ll_BAD_MUNDA_ll"
-            ),
-            InlineKeyboardButton(
-                text="☆ ɢʀᴏᴜᴘ 💗", url=f"https://t.me/PBX_CHAT"
-            ),
-        ],
-          [
-            InlineKeyboardButton(
-                text="☆ ᴄʜᴀɴɴᴇʟ 💗 ", url=f"https://t.me/HEROKUBIN_01"
-            ),
-            InlineKeyboardButton(
-                text="☆ ʀᴇᴘᴏ 💗", url=f"https://github.com/Badhacker98/BADMUSIC/fork"
-            ),
-        ],
                 [
                     InlineKeyboardButton(
-                        "✯ ᴄʟᴏsᴇ ✯", callback_data="close"
-                    )
+                        text="☆ ᴏᴡɴᴇʀ 💗 ", url=f"https://t.me/ll_BAD_MUNDA_ll"
+                    ),
+                    InlineKeyboardButton(
+                        text="☆ ɢʀᴏᴜᴘ 💗", url=f"https://t.me/PBX_CHAT"
+                    ),
                 ],
+                [
+                    InlineKeyboardButton(
+                        text="☆ ᴄʜᴀɴɴᴇʟ 💗 ", url=f"https://t.me/HEROKUBIN_01"
+                    ),
+                    InlineKeyboardButton(
+                        text="☆ ʀᴇᴘᴏ 💗",
+                        url=f"https://github.com/Badhacker98/BADMUSIC/fork",
+                    ),
+                ],
+                [InlineKeyboardButton("✯ ᴄʟᴏsᴇ ✯", callback_data="close")],
             ]
-        )
+        ),
     )
-  

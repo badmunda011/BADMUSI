@@ -8,8 +8,8 @@ import aiohttp
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Voice
 
 import config
-from config import lyrical
 from BADMUSIC import app
+from config import lyrical
 
 from ..utils.formatters import convert_bytes, get_readable_time, seconds_to_min
 

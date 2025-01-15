@@ -27,7 +27,6 @@ from pytgcalls.types import (
 from pytgcalls.types.stream import StreamAudioEnded
 
 import config
-from strings import get_string
 from BADMUSIC import LOGGER, Platform, app
 from BADMUSIC.misc import db
 from BADMUSIC.utils.database import (
@@ -50,6 +49,7 @@ from BADMUSIC.utils.formatters import check_duration, seconds_to_min, speed_conv
 from BADMUSIC.utils.inline.play import stream_markup, telegram_markup
 from BADMUSIC.utils.stream.autoclear import auto_clean
 from BADMUSIC.utils.thumbnails import gen_thumb
+from strings import get_string
 
 active = []
 autoend = {}

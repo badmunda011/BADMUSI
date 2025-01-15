@@ -50,7 +50,10 @@ async def get_note_type(m: Message):
             data_type = Types.STICKER
 
         elif m.reply_to_message.document:
-            if m.reply_to_message.document.mime_type in ["application/x-bad-tgsticker", "application/x-tgsticker"]:
+            if m.reply_to_message.document.mime_type in [
+                "application/x-bad-tgsticker",
+                "application/x-tgsticker",
+            ]:
                 data_type = Types.ANIMATED_STICKER
             else:
                 data_type = Types.DOCUMENT
@@ -118,7 +121,10 @@ async def get_filter_type(m: Message):
             data_type = Types.STICKER
 
         elif m.reply_to_message.document:
-            if m.reply_to_message.document.mime_type in ["application/x-bad-tgsticker", "application/x-tgsticker"]:
+            if m.reply_to_message.document.mime_type in [
+                "application/x-bad-tgsticker",
+                "application/x-tgsticker",
+            ]:
                 data_type = Types.ANIMATED_STICKER
             else:
                 data_type = Types.DOCUMENT
@@ -214,6 +220,7 @@ async def get_wlcm_type(m: Message):
         content = None
 
     return text, data_type, content
+
 
 async def get_afk_type(m: Message):
     data_type = None

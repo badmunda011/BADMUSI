@@ -1,10 +1,12 @@
 from random import choice
-from pyrogram import filters, Client
-from pyrogram.types import Message
-# import 
-from BADMUSIC.misc import SUDOERS as SUDO_USER
-from BADMUSIC.cplugin.utils.data import RAID, PBIRAID, OneWord, HIRAID, PORM, EMOJI, GROUP, VERIFIED_USERS
 
+from pyrogram import Client, filters
+from pyrogram.types import Message
+
+from BADMUSIC.cplugin.utils.data import GROUP, RAID, VERIFIED_USERS
+
+# import
+from BADMUSIC.misc import SUDOERS as SUDO_USER
 
 ACTIVATE_RLIST = []
 
@@ -36,6 +38,7 @@ async def rr(client: Client, message: Message):
     ACTIVATE_RLIST.append(user.id)
     await r.edit(f"**Replyraid Activated On {user.first_name} Successfully ✅**")
 
+
 @Client.on_message(filters.command("drr", prefixes=".") & SUDO_USER)
 async def drr(client: Client, message: Message):
     r = await message.edit_text("**Processing**")
@@ -45,7 +48,9 @@ async def drr(client: Client, message: Message):
     else:
         user = message.text.split(None, 1)[1]
         if not user:
-            await r.edit("Provide me username/userid or reply to user for deactivating replyraid")
+            await r.edit(
+                "Provide me username/userid or reply to user for deactivating replyraid"
+            )
             return
     user = await client.get_users(user)
     if int(user.id) not in ACTIVATE_RLIST:

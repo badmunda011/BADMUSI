@@ -1,13 +1,13 @@
 from pyrogram import filters
 from pyrogram.types import Message
 
-from config import BANNED_USERS, LOG_GROUP_ID
 from BADMUSIC import app
 from BADMUSIC.core.userbot import assistants
 from BADMUSIC.utils.assistant import get_assistant_details
 from BADMUSIC.utils.assistant import is_avl_assistant as assistant
 from BADMUSIC.utils.database import get_assistant, save_assistant, set_assistant
 from BADMUSIC.utils.decorators import AdminActual
+from config import BANNED_USERS, LOG_GROUP_ID
 
 
 @app.on_message(filters.command("changeassistant") & ~BANNED_USERS)

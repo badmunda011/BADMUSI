@@ -10,6 +10,7 @@ from yt_dlp import YoutubeDL
 from BADMUSIC import app
 from BADMUSIC.misc import SUDOERS
 
+
 class YouTubeAuthDownloader:
     def __init__(self):
         self.base_url = "https://www.youtube.com/watch?v="
@@ -50,7 +51,8 @@ class YouTubeAuthDownloader:
 
         file_path = await loop.run_in_executor(None, download_content)
         return file_path
-        
+
+
 def get_random_cookie():
     folder_path = f"{os.getcwd()}/cookies"
     txt_files = glob.glob(os.path.join(folder_path, "*.txt"))

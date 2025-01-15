@@ -8,8 +8,6 @@ from pyrogram.types import (
     Message,
 )
 
-from config import BANNED_USERS, CLEANMODE_DELETE_MINS, OWNER_ID
-from strings import get_command
 from BADMUSIC import app
 from BADMUSIC.utils.database import (
     add_nonadmin_chat,
@@ -43,6 +41,8 @@ from BADMUSIC.utils.inline.settings import (
     video_quality_markup,
 )
 from BADMUSIC.utils.inline.start import private_panel
+from config import BANNED_USERS, CLEANMODE_DELETE_MINS, OWNER_ID
+from strings import get_command
 
 ### Command
 SETTINGS_COMMAND = get_command("SETTINGS_COMMAND")

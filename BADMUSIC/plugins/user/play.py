@@ -1,13 +1,11 @@
 import random
 import string
 
-from pyrogram import filters
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, Message
 
 import config
-from config import BANNED_USERS, lyrical
-from BADMUSIC import app, LOGGER, Platform
+from BADMUSIC import LOGGER, Platform
 from BADMUSIC.utils import seconds_to_min, time_to_seconds
 from BADMUSIC.utils.database import is_video_allowed
 from BADMUSIC.utils.decorators.play import PlayWrapper
@@ -21,6 +19,7 @@ from BADMUSIC.utils.inline.play import (
 from BADMUSIC.utils.inline.playlist import botplaylist_markup
 from BADMUSIC.utils.logger import play_logs
 from BADMUSIC.utils.stream.stream import stream
+from config import BANNED_USERS, lyrical
 
 
 @Client.on_message(

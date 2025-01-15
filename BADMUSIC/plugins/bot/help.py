@@ -9,12 +9,12 @@ from pyrogram import Client, filters, types
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 import config
-from config import BANNED_USERS, START_IMG_URL
-from strings import get_command, get_string
 from BADMUSIC import HELPABLE, app
 from BADMUSIC.utils.database import get_lang, is_commanddelete_on
 from BADMUSIC.utils.decorators.language import LanguageStart
 from BADMUSIC.utils.inline.help import private_help_panel
+from config import BANNED_USERS, START_IMG_URL
+from strings import get_command, get_string
 
 ### Command
 HELP_COMMAND = get_command("HELP_COMMAND")
@@ -251,10 +251,10 @@ async def help_button(client, query):
 from pyrogram import Client, filters
 from pyrogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
 
-from config import BANNED_USERS
-from strings import helpers
 from BADMUSIC import app
 from BADMUSIC.utils.decorators.language import languageCB
+from config import BANNED_USERS
+from strings import helpers
 
 
 @app.on_callback_query(filters.regex("music_callback") & ~BANNED_USERS)
@@ -338,7 +338,9 @@ async def about_callback(client: Client, callback_query: CallbackQuery):
             ),
         ],
         [
-            InlineKeyboardButton(text="🔗 ɪɴsᴛᴀ 🔗", url=f"instagram.com/lll_bad_munda_lll"),
+            InlineKeyboardButton(
+                text="🔗 ɪɴsᴛᴀ 🔗", url=f"instagram.com/lll_bad_munda_lll"
+            ),
             InlineKeyboardButton(text="🔞18+🔞", url=f"https://t.me/UDNA_SP_BKP/25"),
         ],
         [
@@ -346,7 +348,8 @@ async def about_callback(client: Client, callback_query: CallbackQuery):
         ],  # Use a default label for the back button
     ]
     await callback_query.message.edit_text(
-        "<blockquote>ʀᴇᴛᴜʀɴɪɴɢ ᴛᴏ ᴀʙᴏᴜᴛ ᴏᴘᴛɪᴏɴꜱ...<blockquote>", reply_markup=InlineKeyboardMarkup(buttons)
+        "<blockquote>ʀᴇᴛᴜʀɴɪɴɢ ᴛᴏ ᴀʙᴏᴜᴛ ᴏᴘᴛɪᴏɴꜱ...<blockquote>",
+        reply_markup=InlineKeyboardMarkup(buttons),
     )
 
 
@@ -361,7 +364,9 @@ async def feature_callback(client: Client, callback_query: CallbackQuery):
         ],
         [
             InlineKeyboardButton(text="🎧 ᴍᴜsɪᴄ 🎧", callback_data="music"),
-            InlineKeyboardButton(text="🤖 ᴍᴀɴᴇɢᴇᴍᴇɴᴛ 🤖", callback_data="settings_back_helper"),
+            InlineKeyboardButton(
+                text="🤖 ᴍᴀɴᴇɢᴇᴍᴇɴᴛ 🤖", callback_data="settings_back_helper"
+            ),
         ],
         [InlineKeyboardButton(text="✯ ʜᴏᴍᴇ ✯", callback_data="go_to_start")],
     ]
@@ -415,7 +420,8 @@ async def music_callback(client: Client, callback_query: CallbackQuery):
     )
 
     await callback_query.message.edit(
-        "<blockquote><b>ʜᴇʀᴇ ᴀʀᴇ ᴛʜᴇ ᴍᴜꜱɪᴄ ᴏᴘᴛɪᴏɴꜱ...<blockquote><b>", reply_markup=keyboard
+        "<blockquote><b>ʜᴇʀᴇ ᴀʀᴇ ᴛʜᴇ ᴍᴜꜱɪᴄ ᴏᴘᴛɪᴏɴꜱ...<blockquote><b>",
+        reply_markup=keyboard,
     )
 
 
@@ -430,12 +436,15 @@ async def feature_callback(client: Client, callback_query: CallbackQuery):
         ],
         [
             InlineKeyboardButton(text="🎧 ᴍᴜsɪᴄ 🎧", callback_data="music"),
-            InlineKeyboardButton(text="🤖 ᴍᴀɴᴇɢᴇᴍᴇɴᴛ 🤖", callback_data="settings_back_helper"),
+            InlineKeyboardButton(
+                text="🤖 ᴍᴀɴᴇɢᴇᴍᴇɴᴛ 🤖", callback_data="settings_back_helper"
+            ),
         ],
         [InlineKeyboardButton(text="✯ ʜᴏᴍᴇ ✯", callback_data="go_to_start")],
     ]
     await callback_query.message.edit_text(
-        "<blockquote><b>ʜᴇʀᴇ ᴀʀᴇ ᴛʜᴇ ʙᴏᴛ ꜰᴇᴀᴛᴜʀᴇꜱ...<blockquote><b>", reply_markup=InlineKeyboardMarkup(keyboard)
+        "<blockquote><b>ʜᴇʀᴇ ᴀʀᴇ ᴛʜᴇ ʙᴏᴛ ꜰᴇᴀᴛᴜʀᴇꜱ...<blockquote><b>",
+        reply_markup=InlineKeyboardMarkup(keyboard),
     )
 
 
@@ -467,7 +476,8 @@ async def about_callback(client: Client, callback_query: CallbackQuery):
         [InlineKeyboardButton(text="🔙 Back", callback_data="go_to_start")],
     ]
     await callback_query.message.edit_text(
-        "<blockquote><b>ʀᴇᴛᴜʀɴɪɴɢ ᴛᴏ ᴀʙᴏᴜᴛ ᴏᴘᴛɪᴏɴꜱ...<blockquote><b>", reply_markup=InlineKeyboardMarkup(buttons)
+        "<blockquote><b>ʀᴇᴛᴜʀɴɪɴɢ ᴛᴏ ᴀʙᴏᴜᴛ ᴏᴘᴛɪᴏɴꜱ...<blockquote><b>",
+        reply_markup=InlineKeyboardMarkup(buttons),
     )
 
 
@@ -490,7 +500,8 @@ async def back_button_callback(client: Client, callback_query: CallbackQuery):
     ]
 
     await callback_query.message.edit_text(
-        "<blockquote><b>ʜᴇʀᴇ ɪꜱ ᴛʜᴇ ꜱᴜᴘᴘᴏʀᴛ ᴍᴇɴᴜ...<blockquote><b>", reply_markup=InlineKeyboardMarkup(keyboard)
+        "<blockquote><b>ʜᴇʀᴇ ɪꜱ ᴛʜᴇ ꜱᴜᴘᴘᴏʀᴛ ᴍᴇɴᴜ...<blockquote><b>",
+        reply_markup=InlineKeyboardMarkup(keyboard),
     )
 
 
@@ -510,5 +521,4 @@ async def settings_back_callback(client: Client, callback_query: CallbackQuery):
     guide_text = f"<blockquote><b>ʜᴇʀᴇ ᴀʀᴇ ᴛʜᴇ ᴍᴜꜱɪᴄ ᴏᴘᴛɪᴏɴꜱ...<blockquote><b>**ʜᴇʏ! ᴛʜɪs ɪs ᴀ ǫᴜɪᴄᴋ ᴀɴᴅ sɪᴍᴘʟᴇ ɢᴜɪᴅᴇ ᴛᴏ ᴜsɪɴɢ** {app.mention} **🎉**\n\n**1. ᴄʟɪᴄᴋ ᴏɴ ᴛʜᴇ 'ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ᴄʟᴀɴ' ʙᴜᴛᴛᴏɴ.**\n**2. sᴇʟᴇᴄᴛ ʏᴏᴜʀ ɢʀᴏᴜᴘ ɴᴀᴍᴇ.**\n**3. ɢʀᴀɴᴛ ᴛʜᴇ ʙᴏᴛ ᴀʟʟ ɴᴇᴄᴇssᴀʀʏ ᴘᴇʀᴍɪssɪᴏɴs ғᴏʀ sᴍᴏᴏᴛʜ ᴀɴᴅ ғᴜʟʟ ғᴜɴᴄᴛɪᴏɴᴀʟɪᴛʏ.**\n\n**ᴛᴏ ᴀᴄᴄᴇss ᴄᴏᴍᴍᴀɴᴅs, ʏᴏᴜ ᴄᴀɴ ᴄʜᴏᴏsᴇ ʙᴇᴛᴡᴇᴇɴ ᴍᴜsɪᴄ ᴏʀ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ᴘʀᴇғᴇʀᴇɴᴄᴇs.**\n**ɪғ ʏᴏᴜ sᴛɪʟʟ ғᴀᴄᴇ ᴀɴʏ ɪssᴜᴇs, ғᴇᴇʟ ғʀᴇᴇ ᴛᴏ ʀᴇᴀᴄʜ ᴏᴜᴛ ғᴏʀ sᴜᴘᴘᴏʀᴛ ✨**<blockquote><b>"
     await callback_query.message.edit_text(
         text=guide_text, reply_markup=InlineKeyboardMarkup(keyboard)
-)
-        
+    )

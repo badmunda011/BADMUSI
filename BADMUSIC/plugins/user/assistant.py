@@ -4,11 +4,9 @@
 import os
 from inspect import getfullargspec
 
-from pyrogram import filters
-from pyrogram import filters, Client
+from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from BADMUSIC import app
 from BADMUSIC.misc import SUDOERS
 from BADMUSIC.utils.database import get_client
 

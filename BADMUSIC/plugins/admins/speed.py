@@ -1,7 +1,6 @@
 from pyrogram import filters
 from pyrogram.types import Message
 
-from config import BANNED_USERS, adminlist
 from BADMUSIC import app
 from BADMUSIC.core.call import BAD
 from BADMUSIC.misc import SUDOERS, db
@@ -9,6 +8,7 @@ from BADMUSIC.utils import AdminRightsCheck
 from BADMUSIC.utils.database import is_active_chat, is_nonadmin_chat
 from BADMUSIC.utils.decorators.language import languageCB
 from BADMUSIC.utils.inline import close_markup, speed_markup
+from config import BANNED_USERS, adminlist
 
 checker = []
 

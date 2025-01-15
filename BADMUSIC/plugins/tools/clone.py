@@ -1,21 +1,15 @@
-import re
 import logging
-import asyncio
-import importlib
-from sys import argv
-from pyrogram import idle
+
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors.exceptions.bad_request_400 import (
     AccessTokenExpired,
     AccessTokenInvalid,
 )
-from BADMUSIC.utils.database import get_assistant
-from config import API_ID, API_HASH
+
 from BADMUSIC import app
 from BADMUSIC.misc import SUDOERS
-from BADMUSIC.utils.database import get_assistant, clonebotdb
-from config import LOG_GROUP_ID 
+from BADMUSIC.utils.database import clonebotdb, get_assistant
+from config import API_HASH, API_ID, LOG_GROUP_ID
 
 CLONES = set()
 

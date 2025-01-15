@@ -61,4 +61,3 @@ def queue_back_markup(_, CPLAY):
         ]
     )
     return upl
-    

@@ -9,4 +9,4 @@ from .settings import *
 from .song import *
 from .speed import *
 from .start import *
-from .sukh import*
+from .sukh import *

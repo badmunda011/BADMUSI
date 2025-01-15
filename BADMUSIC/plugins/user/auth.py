@@ -1,11 +1,6 @@
-
-from pyrogram import filters, Client
-from pyrogram import filters
+from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from config import BANNED_USERS, adminlist
-from strings import get_command
-from BADMUSIC import app
 from BADMUSIC.utils.database import (
     delete_authuser,
     get_authuser,
@@ -14,6 +9,8 @@ from BADMUSIC.utils.database import (
 )
 from BADMUSIC.utils.decorators import AdminActual, language
 from BADMUSIC.utils.formatters import int_to_alpha
+from config import BANNED_USERS, adminlist
+from strings import get_command
 
 # Command
 AUTH_COMMAND = get_command("AUTH_COMMAND")
@@ -141,4 +138,3 @@ async def authusers(client, message: Message, _):
             text += f"   {_['auth_8']} {admin_name}[`{admin_id}`]\n\n"
         await mystic.delete()
         await message.reply_text(text)
-

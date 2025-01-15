@@ -7,11 +7,11 @@ import importlib
 from pyrogram import idle
 
 import config
-from config import BANNED_USERS
 from BADMUSIC import HELPABLE, LOGGER, app, userbot
 from BADMUSIC.core.call import BAD
 from BADMUSIC.plugins import ALL_MODULES
 from BADMUSIC.utils.database import get_banned_users, get_gbanned
+from config import BANNED_USERS
 
 
 async def init():

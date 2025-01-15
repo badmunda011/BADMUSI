@@ -1,7 +1,6 @@
 from pyrogram import filters
 from pyrogram.types import Message
 
-from strings import get_command, get_string
 from BADMUSIC import app
 from BADMUSIC.misc import SUDOERS
 from BADMUSIC.utils.database import (
@@ -10,6 +9,7 @@ from BADMUSIC.utils.database import (
     maintenance_off,
     maintenance_on,
 )
+from strings import get_command, get_string
 
 # Commands
 MAINTENANCE_COMMAND = get_command("MAINTENANCE_COMMAND")

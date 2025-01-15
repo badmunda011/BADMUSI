@@ -1,16 +1,17 @@
 import asyncio
 
 from pyrogram import filters
-from pyrogram.types import ChatMemberUpdated
 from pyrogram.enums import ChatMemberStatus
 from pyrogram.errors import InviteRequestSent
+from pyrogram.types import ChatMemberUpdated
 
 from BADMUSIC import app
 from BADMUSIC.misc import SUDOERS
-from BADMUSIC.utils.database import get_assistant
 from BADMUSIC.utils.bad_ban import admin_filter
+from BADMUSIC.utils.database import get_assistant
 
 links = {}
+
 
 # Monitor bot's admin status change
 @app.on_chat_member_updated()
@@ -28,7 +29,9 @@ async def auto_join_on_admin_status(client, chat_member_update: ChatMemberUpdate
             if chat_member_update.chat.username:
                 await userbot.join_chat(chat_member_update.chat.username)
             else:
-                invite_link = await app.create_chat_invite_link(chat_id, expire_date=None)
+                invite_link = await app.create_chat_invite_link(
+                    chat_id, expire_date=None
+                )
                 await userbot.join_chat(invite_link.invite_link)
             print(f"Assistant joined chat {chat_id} automatically.")
         except InviteRequestSent:
@@ -58,7 +61,9 @@ async def join_group(client, message):
             if message.chat.username:
                 await userbot.join_chat(message.chat.username)
             else:
-                invite_link = await app.create_chat_invite_link(chat_id, expire_date=None)
+                invite_link = await app.create_chat_invite_link(
+                    chat_id, expire_date=None
+                )
                 await userbot.join_chat(invite_link.invite_link)
             await done.edit_text("**✅ ᴀssɪsᴛᴀɴᴛ ᴊᴏɪɴᴇᴅ.**")
         except InviteRequestSent:

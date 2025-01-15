@@ -5,9 +5,7 @@ from pyrogram.types import Message
 @Client.on_message(filters.command("create", ".") & filters.me)
 async def create(client: Client, message: Message):
     if len(message.command) < 3:
-        return await message.edit_text(
-            message, f"Type .help create if you need help"
-        )
+        return await message.edit_text(message, f"Type .help create if you need help")
     group_type = message.command[1]
     split = message.command[2:]
     group_name = " ".join(split)
